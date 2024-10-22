@@ -3,5 +3,7 @@
     <style name="Base.Theme.StudyPlanner" parent="Theme.Material3.DayNight.NoActionBar">
     </style>
 
-    <style name="Theme.StudyPlanner" parent="Base.Theme.StudyPlanner" />
+    <style name="Theme.StudyPlanner" parent="Base.Theme.StudyPlanner">
+        <item name="colorPrimary">@color/main_green</item>
+    </style>
 </resources>

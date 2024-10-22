@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- When the radio button is selected (checked) -->
+    <item android:state_checked="true">
+        <shape android:shape="oval">
+            <solid android:color="@color/selected"/> <!-- The fill color when selected -->
+            <stroke android:width="100dp" android:color="@android:color/transparent"/> <!-- Border color when selected -->
+        </shape>
+    </item>
+
+    <!-- When the radio button is not selected (unchecked) -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@android:color/transparent"/> <!-- The fill color when unselected -->
+            <stroke android:width="100dp" android:color="@color/grey"/> <!-- Border color when unselected -->
+        </shape>
+    </item>
+</selector>

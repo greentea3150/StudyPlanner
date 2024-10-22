@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/add_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_a_study_plan"
+            android:layout_gravity="center"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="30dp"/>
+
+        <!-- Date EditText -->
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/date"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="7dp"/>
+
+        <EditText
+            android:id="@+id/et_date"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingTop="0dp"
+            android:paddingBottom="2dp"
+            android:hint="@string/enter_date_yyyy_mm_dd"
+            android:background="@drawable/add_task_form"
+            android:gravity="center_vertical"
+            android:inputType="date"
+            android:layout_marginBottom="30dp"/>
+
+        <!-- Category Bullet Points -->
+        <TextView
+            android:id="@+id/tv_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/category"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="7dp"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroup_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp">
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/rb_homework"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/homework" />
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/rb_task"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/task" />
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/rb_exam_study"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/exam_study" />
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/rb_other"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/other" />
+        </RadioGroup>
+
+        <!-- Time Range EditText -->
+        <TextView
+            android:id="@+id/tv_time_range"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/time_range"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="7dp"/>
+
+        <EditText
+            android:id="@+id/et_time_range"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingTop="0dp"
+            android:paddingBottom="2dp"
+            android:background="@drawable/add_task_form"
+            android:hint="@string/hh_mm"
+            android:layout_marginBottom="30dp"/>
+
+        <!-- Until EditText -->
+        <TextView
+            android:id="@+id/tv_until"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/until"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="7dp"/>
+
+        <EditText
+            android:id="@+id/et_until"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingTop="0dp"
+            android:paddingBottom="2dp"
+            android:background="@drawable/add_task_form"
+            android:hint="@string/hh_mm"
+            android:layout_marginBottom="30dp"/>
+
+        <!-- Study / Task Name EditText -->
+        <TextView
+            android:id="@+id/tv_task_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/study_task_name"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="7dp"/>
+
+        <EditText
+            android:id="@+id/et_task_name"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingTop="0dp"
+            android:paddingBottom="2dp"
+            android:background="@drawable/add_task_form"
+            android:hint="@string/enter_task_name"
+            android:layout_marginBottom="30dp"/>
+
+        <!-- Objective EditText -->
+        <TextView
+            android:id="@+id/tv_objective"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/objective"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="7dp"/>
+
+        <EditText
+            android:id="@+id/et_objective"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingTop="0dp"
+            android:paddingBottom="2dp"
+            android:background="@drawable/add_task_form"
+            android:hint="@string/enter_objective"
+            android:layout_marginBottom="30dp"/>
+
+        <!-- Materials Needed EditText -->
+        <TextView
+            android:id="@+id/tv_materials_needed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/materials_needed"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="7dp"/>
+
+        <EditText
+            android:id="@+id/et_materials_needed"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingTop="0dp"
+            android:paddingBottom="2dp"
+            android:background="@drawable/add_task_form"
+            android:hint="@string/enter_materials_needed"
+            android:layout_marginBottom="30dp"/>
+
+        <!-- Status Bullet Points -->
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/status"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="7dp"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroup_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp">
+            <RadioButton
+                android:id="@+id/rb_not_started"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/not_started" />
+            <RadioButton
+                android:id="@+id/rb_in_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/in_progress" />
+            <RadioButton
+                android:id="@+id/rb_finished"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/finished" />
+        </RadioGroup>
+
+        <!-- Photo Section -->
+        <TextView
+            android:id="@+id/tv_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/photo"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="7dp"/>
+
+        <FrameLayout
+            android:id="@+id/frame_photo"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:layout_marginBottom="35dp">
+
+            <ImageView
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp"
+                android:src="@drawable/ic_add_image" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/selectImageButton"
+                android:layout_width="match_parent"
+                android:layout_height="198dp"
+                android:background="@drawable/ic_bordered_frame"
+                android:paddingTop="70dp"
+                android:text="@string/click_to_add_photo"
+                android:textColor="@color/grey"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="35dp"
+            android:layout_gravity="center">
+
+            <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/cancel_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/ic_bordered_frame"
+            android:text="@string/cancel"
+            android:layout_marginRight="15dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/submit_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg"
+            android:text="@string/submit"
+            android:layout_marginLeft="15dp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
