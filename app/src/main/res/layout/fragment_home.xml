@@ -1,12 +1,102 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@android:color/white"
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/homeTextView"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Home Fragment"
-        android:layout_centerInParent="true"/>
+        android:orientation="vertical">
 
-</RelativeLayout>
+        <!-- Profile Picture -->
+        <ImageView
+            android:id="@+id/profileImage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_profile_placeholder"
+            android:contentDescription="Profile Picture"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/circle_background" />
+
+        <!-- Greeting Message -->
+        <TextView
+            android:id="@+id/greetingText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Good morning, User ☁️"
+            android:textSize="24sp"
+            android:layout_marginBottom="8dp"
+            android:textColor="@android:color/black" />
+
+        <!-- Task Counter -->
+        <TextView
+            android:id="@+id/taskCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="8 Tasks"
+            android:textSize="32sp"
+            android:textColor="@android:color/holo_blue_dark"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="4dp" />
+
+        <!-- Motivational Quote -->
+        <TextView
+            android:id="@+id/motivationalQuote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Never gonna give the assignments up 😭"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@android:color/darker_gray" />
+
+        <!-- Today's Tasks Header -->
+        <TextView
+            android:id="@+id/todayTasksTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Today's Tasks"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Task List -->
+        <LinearLayout
+            android:id="@+id/taskList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Task 1 -->
+            <include layout="@layout/task_item" />
+
+            <!-- Task 2 -->
+            <include layout="@layout/task_item" />
+
+            <!-- Task 3 -->
+            <include layout="@layout/task_item" />
+
+            <!-- Task 4 -->
+            <include layout="@layout/task_item" />
+
+            <!-- Task 5 -->
+            <include layout="@layout/task_item" />
+
+            <!-- Task 6 -->
+            <include layout="@layout/task_item" />
+
+            <!-- Task 7 -->
+            <include layout="@layout/task_item" />
+
+            <!-- Task 8 -->
+            <include layout="@layout/task_item" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
