@@ -1,14 +1,241 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TaskDetailsFragment">
+    android:padding="16dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/task_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="[insert_task_title]"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="18dp"/>
+
+        <TextView
+            android:id="@+id/task_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Created on [month]_[date],_[year]"
+            android:textSize="14sp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="18dp"/>
+
+        <!-- Date EditText -->
+        <TextView
+            android:id="@+id/details_tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/date"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="7dp"/>
+
+        <EditText
+            android:id="@+id/et_date"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingTop="0dp"
+            android:paddingBottom="2dp"
+            android:hint="[month]_[date],_[year]"
+            android:gravity="center_vertical"
+            android:inputType="date"
+            android:layout_marginBottom="10dp"/>
+
+        <!-- Time Range EditText -->
+        <TextView
+            android:id="@+id/tv_time_range"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/time_range"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="7dp"/>
+
+        <EditText
+            android:id="@+id/et_time_range"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingTop="0dp"
+            android:paddingBottom="2dp"
+            android:hint="[hh:mm]_-_[hh:mm]"
+            android:layout_marginBottom="10dp"/>
+
+        <!-- Study / Task Name EditText -->
+        <TextView
+            android:id="@+id/tv_task_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/study_task_name"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="7dp"/>
+
+        <EditText
+            android:id="@+id/et_task_name"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingTop="0dp"
+            android:paddingBottom="2dp"
+            android:hint="[insert_task_title/description]"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- Category -->
+        <TextView
+            android:id="@+id/tv_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/category"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="7dp"/>
+
+        <!-- Task Type -->
+        <TextView
+            android:id="@+id/tvTaskType2"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="[insert_task_type]"
+            android:textSize="14sp"
+            android:background="@drawable/task_type_background"
+            android:padding="4dp"
+            android:textColor="#3A3A3A"
+            android:layout_marginBottom="20dp" />
+
+        <!-- Task Status -->
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/task_status"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="7dp"/>
+
+        <TextView
+            android:id="@+id/tvTaskStatus"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="[insert_task_status]"
+            android:textSize="14sp"
+            android:background="@drawable/task_type_background"
+            android:padding="4dp"
+            android:textColor="#3A3A3A"
+            android:layout_marginBottom="20dp" />
+
+        <EditText
+            android:id="@+id/greyLine"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:layout_marginBottom="15dp"/>
+
+        <TextView
+            android:id="@+id/tv_objective"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/objective"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="5dp" />
+
+        <TextView
+            android:id="@+id/tv_objective_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="[insert_task_objective]"
+            android:textSize="14sp"
+            android:layout_marginBottom="30dp" />
+
+        <TextView
+            android:id="@+id/tv_materials"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/materials"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="5dp" />
+
+        <TextView
+            android:id="@+id/tv_materials_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="[insert_materials_details]"
+            android:textSize="14sp"
+            android:layout_marginBottom="30dp" />
+
+        <TextView
+            android:id="@+id/tv_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/photo"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="5dp" />
+
+        <FrameLayout
+            android:id="@+id/frame_photo"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:layout_marginBottom="35dp">
+
+            <ImageView
+                android:id="@+id/uploaded_image"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp"
+                android:src="@drawable/ic_add_image" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/selectImageButton"
+                android:layout_width="match_parent"
+                android:layout_height="198dp"
+                android:background="@drawable/ic_bordered_frame"
+                android:paddingTop="70dp"
+                android:text="@string/click_to_add_photo"
+                android:textColor="@color/grey"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="35dp"
+            android:layout_gravity="center">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/cancel_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/button_bg"
+                android:text="@string/update"
+                android:layout_marginRight="15dp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/submit_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/button_danger"
+                android:text="@string/delete"
+                android:textColor="@color/white"
+                android:layout_marginLeft="15dp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

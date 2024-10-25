@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home -> selectedFragment = HomeFragment()
                 R.id.nav_tasks -> selectedFragment = TasksFragment()
                 R.id.nav_add_task -> selectedFragment = AddTaskFragment()
-                R.id.nav_settings -> selectedFragment = SettingsFragment()
+                R.id.nav_profile -> selectedFragment = ProfileFragment()
             }
 
             supportFragmentManager.beginTransaction().replace(R.id.fragment_container, selectedFragment!!).commit()

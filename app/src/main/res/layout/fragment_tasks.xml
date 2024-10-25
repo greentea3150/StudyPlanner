@@ -59,7 +59,7 @@
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                android:backgroundTint="#F6F6F6">
+                android:backgroundTint="#F8F8F8">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -89,8 +89,9 @@
                     <!-- Task Type -->
                     <TextView
                         android:id="@+id/tvTaskType1"
-                        android:layout_width="wrap_content"
+                        android:layout_width="125dp"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:text="Homework"
                         android:textSize="14sp"
                         android:background="@drawable/task_type_background"
@@ -146,7 +147,7 @@
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                android:backgroundTint="#F6F6F6">
+                android:backgroundTint="#DEF7D3">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -176,8 +177,9 @@
                     <!-- Task Type -->
                     <TextView
                         android:id="@+id/tvTaskType2"
-                        android:layout_width="wrap_content"
+                        android:layout_width="125dp"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:text="Task"
                         android:textSize="14sp"
                         android:background="@drawable/task_type_background"
@@ -235,7 +237,7 @@
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                android:backgroundTint="#F6F6F6">
+                android:backgroundTint="#E9F4FC">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -265,8 +267,9 @@
                     <!-- Task Type -->
                     <TextView
                         android:id="@+id/tvTaskType3"
-                        android:layout_width="wrap_content"
+                        android:layout_width="125dp"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:text="Exam"
                         android:textSize="14sp"
                         android:background="@drawable/task_type_background"

@@ -12,7 +12,7 @@
         android:title="@string/add_task"
         android:icon="@drawable/ic_add_selector" /> <!-- Use selector for add task icon -->
     <item
-        android:id="@+id/nav_settings"
-        android:title="@string/settings"
-        android:icon="@drawable/ic_settings_selector" /> <!-- Use selector for settings icon -->
+        android:id="@+id/nav_profile"
+        android:title="@string/profile"
+        android:icon="@drawable/ic_profile_selector" /> <!-- Use selector for settings icon -->
 </menu>
