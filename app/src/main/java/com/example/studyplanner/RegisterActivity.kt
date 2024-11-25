@@ -21,6 +21,7 @@ import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.MotionEvent
 import android.widget.ImageButton
+import com.google.firebase.database.FirebaseDatabase
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -39,6 +40,9 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+
+        val database = FirebaseDatabase.getInstance()
+        val usersRef = database.getReference("users")
 
         nameEditText = findViewById(R.id.register_name)
         emailEditText = findViewById(R.id.register_email)
@@ -76,10 +80,10 @@ class RegisterActivity : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
 
         registerButton.setOnClickListener {
-            val name = nameEditText.text.toString()
-            val email = emailEditText.text.toString()
-            val password = passwordEditText.text.toString()
-            val confirmPassword = confirmPasswordEditText.text.toString()
+            val name = nameEditText.text.toString().trim()
+            val email = emailEditText.text.toString().trim()
+            val password = passwordEditText.text.toString().trim()
+            val confirmPassword = confirmPasswordEditText.text.toString().trim()
 
             if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
@@ -89,14 +93,35 @@ class RegisterActivity : AppCompatActivity() {
                 mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            startActivity(Intent(this, MainActivity::class.java))
-                            finish()
+                            val userId = mAuth.currentUser?.uid
+                            if (userId != null) {
+                                val userMap = mapOf(
+                                    "name" to name,
+                                    "email" to email
+                                )
+                                usersRef.child(userId).setValue(userMap)
+                                    .addOnCompleteListener { dbTask ->
+                                        if (dbTask.isSuccessful) {
+                                            Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show()
+                                            // Redirect to MainActivity
+                                            startActivity(Intent(this, MainActivity::class.java))
+                                            finish()
+                                        } else {
+                                            Toast.makeText(this, "Failed to save user data: ${dbTask.exception?.message}", Toast.LENGTH_LONG).show()
+                                        }
+                                    }
+                            } else {
+                                Toast.makeText(this, "User ID is null. Try again.", Toast.LENGTH_LONG).show()
+                            }
                         } else {
                             Toast.makeText(this, "Registration failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                         }
                     }
             }
         }
+
+
+
 
         loginRedirect.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))

@@ -9,12 +9,18 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mAuth: FirebaseAuth
+    private var userName: String? = null
+    private var userEmail: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         mAuth = FirebaseAuth.getInstance()
+
+        // Retrieve user data passed from LoginActivity
+        userName = intent.getStringExtra("user_name")
+        userEmail = intent.getStringExtra("user_email")
 
         val bottomNav: BottomNavigationView = findViewById(R.id.bottomNavigationView)
 
@@ -25,10 +31,21 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home -> selectedFragment = HomeFragment()
                 R.id.nav_tasks -> selectedFragment = TasksFragment()
                 R.id.nav_add_task -> selectedFragment = AddTaskFragment()
-                R.id.nav_profile -> selectedFragment = ProfileFragment()
+                R.id.nav_profile -> {
+                    selectedFragment = ProfileFragment()
+                    // Pass user data to ProfileFragment
+                    val bundle = Bundle()
+                    bundle.putString("user_name", userName)
+                    bundle.putString("user_email", userEmail)
+                    selectedFragment.arguments = bundle
+                }
             }
 
-            supportFragmentManager.beginTransaction().replace(R.id.fragment_container, selectedFragment!!).commit()
+            if (selectedFragment != null) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, selectedFragment)
+                    .commit()
+            }
             true
         }
 

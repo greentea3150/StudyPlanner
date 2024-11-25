@@ -18,31 +18,17 @@
 
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/profile_name"
         android:layout_width="102dp"
         android:layout_height="23dp"
         android:layout_marginBottom="32dp"
-        android:text="Kazuma Joryu"
+        android:text="Name"
         app:layout_constraintBottom_toTopOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="133dp"
-        android:layout_height="25dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="80dp"
-        android:gravity="center"
-        android:text="Kazuma Joryu"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/textView5"
@@ -83,10 +69,10 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/profile_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="dragon.of.dojima@email.com"
+        android:text="Email"
         app:layout_constraintBottom_toTopOf="@+id/view4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.688"
