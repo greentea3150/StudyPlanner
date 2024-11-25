@@ -1,11 +1,50 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#f4f4f4">
 
+    <!-- My Schedules Title -->
+    <TextView
+        android:id="@+id/tvMySchedules"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My Schedules"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:textColor="#3A3A3A" />
+
+<!--    &lt;!&ndash; Lists Button &ndash;&gt;-->
+<!--    <Button-->
+<!--        android:id="@+id/btnLists"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Lists"-->
+<!--        android:textSize="16sp"-->
+<!--        android:backgroundTint="#C6F25E"-->
+<!--        android:textColor="#3A3A3A"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:layout_marginTop="16dp" />-->
+
+<!--    &lt;!&ndash; Total Tasks TextView &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/tvTotalTasks"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Total Tasks: 6"-->
+<!--        android:textSize="18sp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:textColor="#6F6F6F" />-->
+
+    <!-- RecyclerView for Tasks -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tasksRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"/>
 </LinearLayout>
