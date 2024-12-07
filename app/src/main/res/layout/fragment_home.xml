@@ -67,36 +67,11 @@
             android:layout_marginBottom="8dp" />
 
         <!-- Task List -->
-        <LinearLayout
-            android:id="@+id/taskList"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tasksRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <!-- Task 1 -->
-            <include layout="@layout/task_item" />
-
-            <!-- Task 2 -->
-            <include layout="@layout/task_item" />
-
-            <!-- Task 3 -->
-            <include layout="@layout/task_item" />
-
-            <!-- Task 4 -->
-            <include layout="@layout/task_item" />
-
-            <!-- Task 5 -->
-            <include layout="@layout/task_item" />
-
-            <!-- Task 6 -->
-            <include layout="@layout/task_item" />
-
-            <!-- Task 7 -->
-            <include layout="@layout/task_item" />
-
-            <!-- Task 8 -->
-            <include layout="@layout/task_item" />
-        </LinearLayout>
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"/>
 
     </LinearLayout>
 </ScrollView>

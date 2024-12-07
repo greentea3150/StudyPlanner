@@ -2,51 +2,83 @@ package com.example.studyplanner
 
 import com.example.studyplanner.databinding.FragmentHomeBinding
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.studyplanner.adapter.TaskAdapter
+import com.example.studyplanner.model.Task
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private lateinit var firestore: FirebaseFirestore
+    private lateinit var tasksRecyclerView: RecyclerView
+    private lateinit var taskAdapter: TaskAdapter
+    private val tasksList = mutableListOf<Task>()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding.root
+        // Inflate the layout for this fragment
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
+
+        // Initialize Firestore
+        firestore = FirebaseFirestore.getInstance()
+
+        // Setup RecyclerView
+        tasksRecyclerView = view.findViewById(R.id.tasksRecyclerView)
+        tasksRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        // Initialize Adapter
+        taskAdapter = TaskAdapter(
+            tasksList
+        ) { task -> showTaskDetails(task) }
+        tasksRecyclerView.adapter = taskAdapter
+
+        // Fetch Tasks
+        fetchTasks()
+
+        return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun fetchTasks() {
+        val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
 
-        // Access each task's included layout and set its title and time
-        setTask(binding.taskList.getChildAt(0), "Electrical Machines 2", "07:00am - 08:00am")
-        setTask(binding.taskList.getChildAt(1), "Basic Programming", "14:00pm - 16:00pm")
-        setTask(binding.taskList.getChildAt(2), "Computer Security", "18:00pm - 20:00pm")
-        setTask(binding.taskList.getChildAt(3), "Robotics", "21:00pm - 22:00pm")
-        setTask(binding.taskList.getChildAt(4), "Math Review", "08:00am - 09:00am")
-        setTask(binding.taskList.getChildAt(5), "Project Discussion", "10:00am - 11:30am")
-        setTask(binding.taskList.getChildAt(6), "Data Science Seminar", "13:00pm - 15:00pm")
-        setTask(binding.taskList.getChildAt(7), "Gym Break", "17:00pm - 18:00pm")
+        currentUserId?.let { userId ->
+            firestore.collection("tasks")
+                .whereEqualTo("userId", userId)
+                .addSnapshotListener { snapshot, e ->
+                    if (e != null) {
+                        Log.e("Firestore", "Error fetching tasks", e)
+                        return@addSnapshotListener
+                    }
+
+                    val fetchedTasks = snapshot?.toObjects(Task::class.java) ?: listOf()
+                    tasksList.clear()
+                    tasksList.addAll(fetchedTasks)
+                    taskAdapter.updateTasks(tasksList)
+                }
+        }
     }
 
-    // Helper function to set task title and time
-    private fun setTask(taskView: View, title: String, time: String) {
-        val taskTitle = taskView.findViewById<TextView>(R.id.taskTitle)
-        val taskTime = taskView.findViewById<TextView>(R.id.taskTime)
-
-        taskTitle.text = title
-        taskTime.text = time
+    private fun showTaskDetails(task: Task) {
+        // Implement task details dialog or navigation
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    companion object {
+        fun newInstance(): TasksFragment {
+            return TasksFragment()
+        }
     }
 }
 
