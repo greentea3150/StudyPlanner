@@ -41,7 +41,6 @@
             android:inputType="date"
             android:layout_marginBottom="30dp"/>
 
-        <!-- Category Bullet Points -->
         <TextView
             android:id="@+id/tv_category"
             android:layout_width="wrap_content"
@@ -49,34 +48,15 @@
             android:text="@string/category"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginBottom="7dp"/>
+            android:layout_marginBottom="7dp" />
 
-        <RadioGroup
-            android:id="@+id/radioGroup_category"
+        <Spinner
+            android:id="@+id/spinner_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp">
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/rb_homework"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/homework" />
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/rb_task"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/task" />
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/rb_exam_study"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/exam_study" />
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/rb_other"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/other" />
-        </RadioGroup>
+            android:layout_marginBottom="30dp"
+            android:spinnerMode="dropdown" />
+
 
         <!-- Time Range EditText -->
         <TextView

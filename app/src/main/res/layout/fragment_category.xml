@@ -1,0 +1,39 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Input field for category name -->
+    <EditText
+        android:id="@+id/editTextCategoryName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Category Name"
+        android:inputType="text" />
+
+    <!-- Color picker button -->
+    <Button
+        android:id="@+id/buttonPickColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pick Color"
+        android:layout_marginTop="16dp" />
+
+    <!-- Selected color preview -->
+    <View
+        android:id="@+id/selectedColorPreview"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:background="#FFFFFF" />
+
+    <!-- Save button -->
+    <Button
+        android:id="@+id/buttonSaveCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save Category"
+        android:layout_marginTop="16dp" />
+</LinearLayout>
