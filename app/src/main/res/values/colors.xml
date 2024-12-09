@@ -6,4 +6,5 @@
     <color name="main_green">#D2EB63</color>
     <color name="not_selected">#D7DADF</color>
     <color name="selected">#3E6ACB</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>

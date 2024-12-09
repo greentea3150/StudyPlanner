@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,17 +11,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Profile Picture -->
-        <ImageView
-            android:id="@+id/profileImage"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="end"
-            android:src="@drawable/ic_profile_placeholder"
-            android:contentDescription="Profile Picture"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/circle_background" />
-
         <!-- Greeting Message -->
         <TextView
             android:id="@+id/greetingText"
@@ -31,6 +19,7 @@
             android:text="Good morning, User ☁️"
             android:textSize="24sp"
             android:layout_marginBottom="8dp"
+            android:layout_gravity="center_horizontal"
             android:textColor="@android:color/black" />
 
         <!-- Task Counter -->
@@ -66,12 +55,355 @@
             android:textStyle="bold"
             android:layout_marginBottom="8dp" />
 
-        <!-- Task List -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/tasksRecyclerView"
+        <!-- Clock Container wrapped in ScrollView -->
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="16dp"/>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <!-- Clock Container -->
+            <RelativeLayout
+                android:id="@+id/clockContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp">
+
+                <!-- Vertical Time Slots -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerVertical="true">
+
+                    <!-- Time slots from 0:00 to 23:00 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/timeSlot_0"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="00:00"
+                            android:textSize="14sp"
+                            android:gravity="start"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="0dp"
+                            android:background="@drawable/border_top"
+                            android:paddingTop="18dp"
+                            android:paddingBottom="18dp" />
+                        <TextView
+                            android:id="@+id/timeSlot_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="01:00"
+                            android:textSize="14sp"
+                            android:gravity="start"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="0dp"
+                            android:background="@drawable/border_top"
+                            android:paddingTop="18dp"
+                            android:paddingBottom="18dp" />
+
+                        <TextView
+                            android:id="@+id/timeSlot_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="02:00"
+                            android:textSize="14sp"
+                            android:gravity="start"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="0dp"
+                            android:background="@drawable/border_top"
+                            android:paddingTop="18dp"
+                            android:paddingBottom="18dp" />
+
+                        <TextView
+                            android:id="@+id/timeSlot_3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="03:00"
+                            android:textSize="14sp"
+                            android:gravity="start"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="0dp"
+                            android:background="@drawable/border_top"
+                            android:paddingTop="18dp"
+                            android:paddingBottom="18dp" />
+
+                        <TextView
+                            android:id="@+id/timeSlot_4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="04:00"
+                            android:textSize="14sp"
+                            android:gravity="start"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="0dp"
+                            android:background="@drawable/border_top"
+                            android:paddingTop="18dp"
+                            android:paddingBottom="18dp" />
+
+                        <TextView
+                            android:id="@+id/timeSlot_5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="05:00"
+                            android:textSize="14sp"
+                            android:gravity="start"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="0dp"
+                            android:background="@drawable/border_top"
+                            android:paddingTop="18dp"
+                            android:paddingBottom="18dp" />
+
+                        <TextView
+                            android:id="@+id/timeSlot_6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="06:00"
+                            android:textSize="14sp"
+                            android:gravity="start"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="0dp"
+                            android:background="@drawable/border_top"
+                            android:paddingTop="18dp"
+                            android:paddingBottom="18dp" />
+
+                        <TextView
+                            android:id="@+id/timeSlot_7"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="07:00"
+                            android:textSize="14sp"
+                            android:gravity="start"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="0dp"
+                            android:background="@drawable/border_top"
+                            android:paddingTop="18dp"
+                            android:paddingBottom="18dp" />
+                        <TextView
+                            android:id="@+id/timeSlot_8"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="08:00"
+                            android:textSize="14sp"
+                            android:gravity="start"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="0dp"
+                            android:background="@drawable/border_top"
+                            android:paddingTop="18dp"
+                            android:paddingBottom="18dp" />
+
+                        <TextView
+                            android:id="@+id/timeSlot_9"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="09:00"
+                            android:textSize="14sp"
+                            android:gravity="start"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="0dp"
+                            android:background="@drawable/border_top"
+                            android:paddingTop="18dp"
+                            android:paddingBottom="18dp" />
+
+                        <TextView
+                            android:id="@+id/timeSlot_10"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="10:00"
+                            android:textSize="14sp"
+                            android:gravity="start"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="0dp"
+                            android:background="@drawable/border_top"
+                            android:paddingTop="18dp"
+                            android:paddingBottom="18dp" />
+
+                        <TextView
+                            android:id="@+id/timeSlot_11"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="11:00"
+                            android:textSize="14sp"
+                            android:gravity="start"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="0dp"
+                            android:background="@drawable/border_top"
+                            android:paddingTop="18dp"
+                            android:paddingBottom="18dp" />
+
+                        <TextView
+                            android:id="@+id/timeSlot_12"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="12:00"
+                            android:textSize="14sp"
+                            android:gravity="start"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="0dp"
+                            android:background="@drawable/border_top"
+                            android:paddingTop="18dp"
+                            android:paddingBottom="18dp" />
+
+                        <TextView
+                            android:id="@+id/timeSlot_13"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="13:00"
+                            android:textSize="14sp"
+                            android:gravity="start"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="0dp"
+                            android:background="@drawable/border_top"
+                            android:paddingTop="18dp"
+                            android:paddingBottom="18dp" />
+
+                        <TextView
+                            android:id="@+id/timeSlot_14"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="14:00"
+                            android:textSize="14sp"
+                            android:gravity="start"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="0dp"
+                            android:background="@drawable/border_top"
+                            android:paddingTop="18dp"
+                            android:paddingBottom="18dp" />
+
+                        <TextView
+                            android:id="@+id/timeSlot_15"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="15:00"
+                            android:textSize="14sp"
+                            android:gravity="start"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="0dp"
+                            android:background="@drawable/border_top"
+                            android:paddingTop="18dp"
+                            android:paddingBottom="18dp" />
+
+                        <TextView
+                            android:id="@+id/timeSlot_16"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="16:00"
+                            android:textSize="14sp"
+                            android:gravity="start"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="0dp"
+                            android:background="@drawable/border_top"
+                            android:paddingTop="18dp"
+                            android:paddingBottom="18dp" />
+
+                        <TextView
+                            android:id="@+id/timeSlot_17"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="17:00"
+                            android:textSize="14sp"
+                            android:gravity="start"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="0dp"
+                            android:background="@drawable/border_top"
+                            android:paddingTop="18dp"
+                            android:paddingBottom="18dp" />
+
+                        <TextView
+                            android:id="@+id/timeSlot_18"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="18:00"
+                            android:textSize="14sp"
+                            android:gravity="start"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="0dp"
+                            android:background="@drawable/border_top"
+                            android:paddingTop="18dp"
+                            android:paddingBottom="18dp" />
+
+                        <TextView
+                            android:id="@+id/timeSlot_19"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="19:00"
+                            android:textSize="14sp"
+                            android:gravity="start"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="0dp"
+                            android:background="@drawable/border_top"
+                            android:paddingTop="18dp"
+                            android:paddingBottom="18dp" />
+
+                        <TextView
+                            android:id="@+id/timeSlot_20"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="20:00"
+                            android:textSize="14sp"
+                            android:gravity="start"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="0dp"
+                            android:background="@drawable/border_top"
+                            android:paddingTop="18dp"
+                            android:paddingBottom="18dp" />
+
+                        <TextView
+                            android:id="@+id/timeSlot_21"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="21:00"
+                            android:textSize="14sp"
+                            android:gravity="start"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="0dp"
+                            android:background="@drawable/border_top"
+                            android:paddingTop="18dp"
+                            android:paddingBottom="18dp" />
+
+                        <TextView
+                            android:id="@+id/timeSlot_22"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="22:00"
+                            android:textSize="14sp"
+                            android:gravity="start"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="0dp"
+                            android:background="@drawable/border_top"
+                            android:paddingTop="18dp"
+                            android:paddingBottom="18dp" />
+
+                        <TextView
+                            android:id="@+id/timeSlot_23"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="23:00"
+                            android:textSize="14sp"
+                            android:gravity="start"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="0dp"
+                            android:background="@drawable/border_top_bottom"
+                            android:paddingTop="18dp"
+                            android:paddingBottom="18dp" />
+                    </LinearLayout>
+                <!-- Add the remaining time slots here -->
+
+                </LinearLayout>
+
+                <!-- Clock Needle (moves vertically) -->
+                <View
+                    android:id="@+id/clockNeedle"
+                    android:layout_width="400dp"
+                    android:layout_height="5dp"
+                    android:background="@color/selected"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentTop="true" />
+            </RelativeLayout>
+        </ScrollView>
 
     </LinearLayout>
-</ScrollView>
+</LinearLayout>

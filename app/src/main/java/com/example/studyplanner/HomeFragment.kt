@@ -1,84 +1,95 @@
 package com.example.studyplanner
 
-import com.example.studyplanner.databinding.FragmentHomeBinding
+import android.animation.ValueAnimator
 import android.os.Bundle
-import android.util.Log
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.studyplanner.adapter.TaskAdapter
-import com.example.studyplanner.model.Task
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import com.example.studyplanner.databinding.FragmentHomeBinding
+import java.util.*
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var firestore: FirebaseFirestore
-    private lateinit var tasksRecyclerView: RecyclerView
-    private lateinit var taskAdapter: TaskAdapter
-    private val tasksList = mutableListOf<Task>()
+    private lateinit var clockNeedle: View
+    private lateinit var clockContainer: RelativeLayout
+    private lateinit var handler: Handler
+    private val updateInterval: Long = 1000 // 1 second
+
+    // Define the updateTimeRunnable explicitly as a Runnable type
+    private val updateTimeRunnable: Runnable = object : Runnable {
+        override fun run() {
+            animateClockNeedle()
+            handler.postDelayed(this, updateInterval)
+        }
+    }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        val view = binding.root
 
-        // Initialize Firestore
-        firestore = FirebaseFirestore.getInstance()
+        clockNeedle = binding.root.findViewById(R.id.clockNeedle)
+        clockContainer = binding.root.findViewById(R.id.clockContainer)
 
-        // Setup RecyclerView
-        tasksRecyclerView = view.findViewById(R.id.tasksRecyclerView)
-        tasksRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        // Initialize the handler
+        handler = Handler(Looper.getMainLooper())
 
-        // Initialize Adapter
-        taskAdapter = TaskAdapter(
-            tasksList
-        ) { task -> showTaskDetails(task) }
-        tasksRecyclerView.adapter = taskAdapter
-
-        // Fetch Tasks
-        fetchTasks()
+        // Start updating the needle
+        handler.post(updateTimeRunnable)
 
         return view
     }
 
-    private fun fetchTasks() {
-        val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
+    private fun animateClockNeedle() {
+        // Get the current time
+        val currentTimeMillis = System.currentTimeMillis()
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = currentTimeMillis
 
-        currentUserId?.let { userId ->
-            firestore.collection("tasks")
-                .whereEqualTo("userId", userId)
-                .addSnapshotListener { snapshot, e ->
-                    if (e != null) {
-                        Log.e("Firestore", "Error fetching tasks", e)
-                        return@addSnapshotListener
-                    }
+        // Extract hour and minute from the current time
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
 
-                    val fetchedTasks = snapshot?.toObjects(Task::class.java) ?: listOf()
-                    tasksList.clear()
-                    tasksList.addAll(fetchedTasks)
-                    taskAdapter.updateTasks(tasksList)
-                }
+        // Calculate the total time passed in the day (from 0:00 to 23:59)
+        val totalMinutesInDay = 24 * 60
+        val elapsedMinutes = (hour * 60 + minute).toFloat()
+
+        // Calculate the vertical position (where 0% is the top and 100% is the bottom)
+        val verticalPosition = (elapsedMinutes / totalMinutesInDay) * clockContainer.height
+
+        // Create a ValueAnimator to animate the vertical position of the needle
+        val animator = ValueAnimator.ofFloat(clockNeedle.translationY, verticalPosition)
+        animator.duration = updateInterval // Duration of animation (1 second)
+        animator.addUpdateListener { animation ->
+            // Update the needle's translationY based on the animation progress
+            clockNeedle.translationY = animation.animatedValue as Float
         }
+
+        animator.start()
     }
 
-    private fun showTaskDetails(task: Task) {
-        // Implement task details dialog or navigation
+    override fun onResume() {
+        super.onResume()
+        // Ensure that the needle keeps updating even when the fragment is in the foreground
+        handler.post(updateTimeRunnable)
     }
 
-    companion object {
-        fun newInstance(): TasksFragment {
-            return TasksFragment()
-        }
+    override fun onPause() {
+        super.onPause()
+        // Stop the updates when the fragment goes into the background
+        handler.removeCallbacks(updateTimeRunnable)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        handler.removeCallbacksAndMessages(null) // Clean up handler
     }
 }
-
