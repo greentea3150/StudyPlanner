@@ -81,10 +81,10 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/profile_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="69 420 360 911"
+        android:text="Phone Number"
         app:layout_constraintBottom_toTopOf="@+id/view2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.507"
@@ -131,7 +131,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/profile_birthday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Birthday"

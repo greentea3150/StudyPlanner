@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class CategoryFragment : Fragment() {
@@ -47,20 +48,27 @@ class CategoryFragment : Fragment() {
             if (categoryName.isEmpty()) {
                 Snackbar.make(view, "Category name cannot be empty!", Snackbar.LENGTH_SHORT).show()
             } else {
-                val category = hashMapOf(
-                    "name" to categoryName,
-                    "color" to selectedColor
-                )
+                val currentUser = FirebaseAuth.getInstance().currentUser
+                if (currentUser != null) {
+                    val userId = currentUser.uid
+                    val category = hashMapOf(
+                        "name" to categoryName,
+                        "color" to selectedColor,
+                        "userId" to userId
+                    )
 
-                firestore.collection("Categories").add(category)
-                    .addOnSuccessListener {
-                        Toast.makeText(context, "Category saved successfully!", Toast.LENGTH_SHORT).show()
-                        editTextCategoryName.text.clear()
-                        colorPreview.setBackgroundColor(Color.WHITE)
-                    }
-                    .addOnFailureListener {
-                        Snackbar.make(view, "Failed to save category.", Snackbar.LENGTH_SHORT).show()
-                    }
+                    firestore.collection("Categories").add(category)
+                        .addOnSuccessListener {
+                            Toast.makeText(context, "Category saved successfully!", Toast.LENGTH_SHORT).show()
+                            editTextCategoryName.text.clear()
+                            colorPreview.setBackgroundColor(Color.WHITE)
+                        }
+                        .addOnFailureListener {
+                            Snackbar.make(view, "Failed to save category.", Snackbar.LENGTH_SHORT).show()
+                        }
+                } else {
+                    Snackbar.make(view, "User not authenticated!", Snackbar.LENGTH_SHORT).show()
+                }
             }
         }
 

@@ -9,13 +9,14 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 
 class ProfileFragment : Fragment() {
 
     private lateinit var profileNameTextView: TextView
     private lateinit var emailTextView: TextView
     private lateinit var mAuth: FirebaseAuth
-    private val database = FirebaseDatabase.getInstance()
+    private val firestore = FirebaseFirestore.getInstance() // Initialize Firestore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,37 +40,49 @@ class ProfileFragment : Fragment() {
             profileNameTextView.text = userName
             emailTextView.text = userEmail
         } else {
-            // Fallback to load data from Firebase if arguments are null
-            loadUserProfileFromFirebase()
+            // Fallback to load data from Firestore if arguments are null
+            loadUserProfileFromFirestore()
         }
 
         return view
     }
 
-    private fun loadUserProfileFromFirebase() {
+    private fun loadUserProfileFromFirestore() {
         val currentUser = mAuth.currentUser
 
         if (currentUser != null) {
             val userId = currentUser.uid
-            val usersRef = database.getReference("users").child(userId)
+            val userDocRef = firestore.collection("users").document(userId)
 
-            usersRef.get()
-                .addOnSuccessListener { snapshot ->
-                    val name = snapshot.child("name").value?.toString()
-                    val email = snapshot.child("email").value?.toString()
+            userDocRef.get()
+                .addOnSuccessListener { document ->
+                    if (document.exists()) {
+                        val name = document.getString("name")
+                        val email = document.getString("email")
 
-                    if (name != null && email != null) {
-                        profileNameTextView.text = name
-                        emailTextView.text = email
+                        if (name != null && email != null) {
+                            profileNameTextView.text = name
+                            emailTextView.text = email
+                        } else {
+                            if (isAdded) { // Ensure the fragment is attached
+                                Toast.makeText(requireContext(), "Error: User data is incomplete.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
                     } else {
-                        Toast.makeText(context, "Error: User data is incomplete.", Toast.LENGTH_SHORT).show()
+                        if (isAdded) { // Ensure the fragment is attached
+                            Toast.makeText(requireContext(), "Error: User document not found.", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
                 .addOnFailureListener { exception ->
-                    Toast.makeText(context, "Failed to load profile: ${exception.message}", Toast.LENGTH_LONG).show()
+                    if (isAdded) { // Ensure the fragment is attached
+                        Toast.makeText(requireContext(), "Failed to load profile: ${exception.message}", Toast.LENGTH_LONG).show()
+                    }
                 }
         } else {
-            Toast.makeText(context, "User not logged in.", Toast.LENGTH_LONG).show()
+            if (isAdded) { // Ensure the fragment is attached
+                Toast.makeText(requireContext(), "User not logged in.", Toast.LENGTH_LONG).show()
+            }
         }
     }
 }

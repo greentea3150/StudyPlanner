@@ -22,6 +22,7 @@ import android.text.method.PasswordTransformationMethod
 import android.view.MotionEvent
 import android.widget.ImageButton
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -41,9 +42,6 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        val database = FirebaseDatabase.getInstance()
-        val usersRef = database.getReference("users")
-
         nameEditText = findViewById(R.id.register_name)
         emailEditText = findViewById(R.id.register_email)
         passwordEditText = findViewById(R.id.register_password)
@@ -54,28 +52,6 @@ class RegisterActivity : AppCompatActivity() {
 
         setUpPasswordToggle(passwordEditText, isPasswordVisible)
         setUpPasswordToggle(confirmPasswordEditText, isConfirmPasswordVisible)
-
-        val text = "Already have an account? Log in"
-        val spannableString = SpannableString(text)
-
-        val greenColor = ForegroundColorSpan(ContextCompat.getColor(this, R.color.main_green))
-        val underlineSpan = UnderlineSpan()
-
-        // Applying spans to the "Log in" part
-        spannableString.setSpan(greenColor, 25, text.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        spannableString.setSpan(underlineSpan, 25, text.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-
-        // Making "Log in" clickable
-        val clickableSpan = object : ClickableSpan() {
-            override fun onClick(widget: View) {
-                startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
-            }
-        }
-        spannableString.setSpan(clickableSpan, 25, text.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-
-        // Set the spannable text to your TextView
-        loginRedirect.text = spannableString
-        loginRedirect.movementMethod = LinkMovementMethod.getInstance()
 
         mAuth = FirebaseAuth.getInstance()
 
@@ -95,15 +71,16 @@ class RegisterActivity : AppCompatActivity() {
                         if (task.isSuccessful) {
                             val userId = mAuth.currentUser?.uid
                             if (userId != null) {
+                                val firestore = FirebaseFirestore.getInstance()
                                 val userMap = mapOf(
                                     "name" to name,
                                     "email" to email
                                 )
-                                usersRef.child(userId).setValue(userMap)
+                                firestore.collection("users").document(userId)
+                                    .set(userMap)
                                     .addOnCompleteListener { dbTask ->
                                         if (dbTask.isSuccessful) {
                                             Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show()
-                                            // Redirect to MainActivity
                                             startActivity(Intent(this, MainActivity::class.java))
                                             finish()
                                         } else {
@@ -120,9 +97,6 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
 
-
-
-
         loginRedirect.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
         }
@@ -136,7 +110,6 @@ class RegisterActivity : AppCompatActivity() {
     private fun setUpPasswordToggle(editText: EditText, isVisible: Boolean) {
         editText.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_UP) {
-                // Check if the touch is on the drawableEnd (right side)
                 if (event.rawX >= (editText.right - editText.compoundDrawables[2].bounds.width())) {
                     togglePasswordVisibility(editText)
                     return@setOnTouchListener true
@@ -148,19 +121,16 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun togglePasswordVisibility(editText: EditText) {
         if (editText.transformationMethod is PasswordTransformationMethod) {
-            // Show password
             editText.transformationMethod = HideReturnsTransformationMethod.getInstance()
             editText.setCompoundDrawablesWithIntrinsicBounds(
                 null, null, ContextCompat.getDrawable(this, R.drawable.ic_toggle_password_visibility_off), null
             )
         } else {
-            // Hide password
             editText.transformationMethod = PasswordTransformationMethod.getInstance()
             editText.setCompoundDrawablesWithIntrinsicBounds(
                 null, null, ContextCompat.getDrawable(this, R.drawable.ic_toggle_password_visibility_on), null
             )
         }
-        // Move the cursor to the end
         editText.setSelection(editText.text.length)
     }
 }

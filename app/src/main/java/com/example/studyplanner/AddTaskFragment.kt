@@ -82,7 +82,14 @@ class AddTaskFragment : Fragment() {
     }
 
     private fun loadCategories() {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        if (userId == null) {
+            Toast.makeText(requireContext(), "User not authenticated.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         firestore.collection("Categories")
+            .whereEqualTo("userId", userId) // Filter categories by the current user's ID
             .get()
             .addOnSuccessListener { querySnapshot ->
                 categoryList.clear()
