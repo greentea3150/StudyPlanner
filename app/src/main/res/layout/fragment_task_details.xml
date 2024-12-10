@@ -182,7 +182,7 @@
             android:layout_gravity="center">
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/cancel_button"
+                android:id="@+id/updatetask_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -191,7 +191,7 @@
                 android:layout_marginRight="15dp"/>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/submit_button"
+                android:id="@+id/deletetask_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
