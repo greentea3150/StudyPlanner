@@ -1,9 +1,11 @@
 package com.example.studyplanner.model
 
+import com.google.firebase.firestore.DocumentId
 import java.io.Serializable
 
 data class Task(
-    val id: String = "",
+    @DocumentId
+    val id: String = "",  // Firestore document ID is automatically mapped to this field
     val category: String = "",
     val date: String = "",
     val materialsNeeded: String = "",

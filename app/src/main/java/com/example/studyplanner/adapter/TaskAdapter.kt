@@ -11,7 +11,8 @@ import com.example.studyplanner.model.Task
 
 class TaskAdapter(
     private var tasks: List<Task>,
-    private val onItemClick: (Task) -> Unit
+    private val onItemClick: (Task) -> Unit,
+    private val onDeleteClick: (String) -> Unit // Add this parameter to handle delete action
 ) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -19,6 +20,7 @@ class TaskAdapter(
         private val categoryTextView: TextView = itemView.findViewById(R.id.categoryTextView)
         private val dateTimeTextView: TextView = itemView.findViewById(R.id.dateTimeTextView)
         private val statusTextView: TextView = itemView.findViewById(R.id.statusTextView)
+        private val deleteButton: Button = itemView.findViewById(R.id.deleteButton)
 
         fun bind(task: Task) {
             taskNameTextView.text = task.taskName
@@ -26,7 +28,14 @@ class TaskAdapter(
             dateTimeTextView.text = "${task.date} | ${task.timeRange} - ${task.until}"
             statusTextView.text = task.status
 
+            // Set click listener for the task item
             itemView.setOnClickListener { onItemClick(task) }
+
+            // Set click listener for the delete button
+            deleteButton.setOnClickListener {
+                // Pass the task's ID to the onDeleteClick function to delete it
+                onDeleteClick(task.id)
+            }
         }
     }
 

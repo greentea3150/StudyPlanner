@@ -37,8 +37,10 @@ class TasksFragment : Fragment() {
 
         // Initialize Adapter
         taskAdapter = TaskAdapter(
-            tasksList
-        ) { task -> showTaskDetails(task) }
+            tasksList,
+            onItemClick = { task -> showTaskDetails(task) },
+            onDeleteClick = { taskId -> deleteTaskFromFirestore(taskId) }
+        )
         tasksRecyclerView.adapter = taskAdapter
 
         // Fetch Tasks
@@ -66,6 +68,32 @@ class TasksFragment : Fragment() {
                 }
         }
     }
+
+    private fun deleteTaskFromFirestore(taskId: String) {
+        Log.d("TaskID", "Attempting to delete task with ID: $taskId")
+
+        val taskRef = firestore.collection("tasks").document(taskId)
+
+        taskRef.delete()
+            .addOnSuccessListener {
+                Log.d("Firestore", "Task deleted successfully")
+
+                // Find the position of the deleted task in the list
+                val position = tasksList.indexOfFirst { it.id == taskId }
+                if (position >= 0) {
+                    tasksList.removeAt(position) // Remove the task from the list
+                    taskAdapter.notifyItemRemoved(position) // Notify the adapter
+                }
+
+                // Optionally, refresh the task list
+                fetchTasks() // You can refresh the list or leave it as is
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "Error deleting task", e)
+                // Optionally, show an error message to the user
+            }
+    }
+
 
     private fun showTaskDetails(task: Task) {
         val taskDetailFragment = TaskDetailsFragment.newInstance(task)
