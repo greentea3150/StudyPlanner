@@ -1,5 +1,7 @@
 package com.example.studyplanner.model
 
+import java.io.Serializable
+
 data class Task(
     val id: String = "",
     val category: String = "",
@@ -11,6 +13,6 @@ data class Task(
     val timeRange: String = "",
     val until: String = "",
     val userId: String = ""
-) {
+) : Serializable {
     constructor() : this("", "", "", "", "", "", "", "", "", "")
 }

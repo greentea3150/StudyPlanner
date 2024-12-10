@@ -68,7 +68,12 @@ class TasksFragment : Fragment() {
     }
 
     private fun showTaskDetails(task: Task) {
-        // Implement task details dialog or navigation
+        val taskDetailFragment = TaskDetailsFragment.newInstance(task)
+
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, taskDetailFragment) // Replace with your container ID
+            .addToBackStack(null) // Add to backstack for navigation
+            .commit()
     }
 
     companion object {

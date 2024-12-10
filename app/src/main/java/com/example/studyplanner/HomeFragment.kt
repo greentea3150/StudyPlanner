@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,13 +29,14 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        val view = binding.root
 
         // Initialize Firestore
         firestore = FirebaseFirestore.getInstance()
 
         // Setup RecyclerView
-        tasksRecyclerView = view.findViewById(R.id.tasksRecyclerView)
+        tasksRecyclerView = binding.tasksRecyclerView
         tasksRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         // Initialize Adapter
@@ -72,13 +72,16 @@ class HomeFragment : Fragment() {
     }
 
     private fun showTaskDetails(task: Task) {
-        // Implement task details dialog or navigation
+        val taskDetailFragment = TaskDetailsFragment.newInstance(task)
+
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, taskDetailFragment) // Replace with your container ID
+            .addToBackStack(null) // Add to backstack for navigation
+            .commit()
     }
 
-    companion object {
-        fun newInstance(): TasksFragment {
-            return TasksFragment()
-        }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
-

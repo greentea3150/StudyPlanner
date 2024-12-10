@@ -60,6 +60,13 @@ class AddTaskFragment : Fragment() {
         val rbNotStarted = view.findViewById<RadioButton>(R.id.rb_not_started)
         rbNotStarted?.isChecked = true
 
+        //disable the other 2 status radio button
+        val rbInProgress = view.findViewById<RadioButton>(R.id.rb_in_progress)
+        val rbFinished = view.findViewById<RadioButton>(R.id.rb_finished)
+
+        rbInProgress.isEnabled = false
+        rbFinished.isEnabled = false
+
         setupButtonListeners()
         loadCategories()
         return view
