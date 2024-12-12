@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:layout_marginTop="16dp"
     android:layout_marginBottom="16dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
     app:cardCornerRadius="12dp"
     app:cardElevation="4dp"
     android:backgroundTint="#E9F4FC">
@@ -46,31 +49,5 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:textColor="#FF6F6F"/>
-
-        <!-- Edit and Delete Buttons -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            android:gravity="end">
-
-            <Button
-                android:id="@+id/editButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:backgroundTint="#4CAF50"
-                android:text="Edit"
-                android:textColor="#FFFFFF"/>
-
-            <Button
-                android:id="@+id/deleteButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#F44336"
-                android:text="Delete"
-                android:textColor="#FFFFFF"/>
         </LinearLayout>
-    </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- Task Title -->
         <TextView
             android:id="@+id/task_title"
             android:layout_width="wrap_content"
@@ -17,8 +18,9 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginBottom="5dp"
-            android:layout_marginLeft="18dp"/>
+            android:layout_marginLeft="18dp" />
 
+        <!-- Task Creation Date -->
         <TextView
             android:id="@+id/task_date"
             android:layout_width="wrap_content"
@@ -26,9 +28,12 @@
             android:text="Created on [month]_[date],_[year]"
             android:textSize="14sp"
             android:layout_marginBottom="30dp"
-            android:layout_marginLeft="18dp"/>
+            android:inputType="none"
+            android:focusable="false"
+            android:clickable="true"
+            android:layout_marginLeft="18dp" />
 
-        <!-- Date EditText -->
+        <!-- Date Section -->
         <TextView
             android:id="@+id/details_tv_date"
             android:layout_width="wrap_content"
@@ -36,20 +41,23 @@
             android:text="@string/date"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginBottom="7dp"/>
+            android:inputType="none"
+            android:focusable="false"
+            android:clickable="true"
+            android:layout_marginBottom="7dp" />
 
         <EditText
             android:id="@+id/et_date"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:paddingTop="0dp"
-            android:paddingBottom="2dp"
             android:hint="[month]_[date],_[year]"
             android:gravity="center_vertical"
-            android:inputType="date"
-            android:layout_marginBottom="10dp"/>
+            android:inputType="none"
+            android:focusable="false"
+            android:clickable="true"
+            android:layout_marginBottom="10dp" />
 
-        <!-- Time Range EditText -->
+        <!-- Time Range Section -->
         <TextView
             android:id="@+id/tv_time_range"
             android:layout_width="wrap_content"
@@ -57,18 +65,19 @@
             android:text="@string/time_range"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginBottom="7dp"/>
+            android:layout_marginBottom="7dp" />
 
         <EditText
             android:id="@+id/et_time_range"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:paddingTop="0dp"
-            android:paddingBottom="2dp"
             android:hint="[hh:mm]_-_[hh:mm]"
-            android:layout_marginBottom="10dp"/>
+            android:inputType="none"
+            android:focusable="false"
+            android:clickable="true"
+            android:layout_marginBottom="10dp" />
 
-        <!-- Study / Task Name EditText -->
+        <!-- Task Name Section -->
         <TextView
             android:id="@+id/tv_task_name"
             android:layout_width="wrap_content"
@@ -76,18 +85,16 @@
             android:text="@string/study_task_name"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginBottom="7dp"/>
+            android:layout_marginBottom="7dp" />
 
         <EditText
             android:id="@+id/et_task_name"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:paddingTop="0dp"
-            android:paddingBottom="2dp"
             android:hint="[insert_task_title/description]"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="20dp" />
 
-        <!-- Category -->
+        <!-- Category Section -->
         <TextView
             android:id="@+id/tv_category"
             android:layout_width="wrap_content"
@@ -95,9 +102,9 @@
             android:text="@string/category"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginBottom="7dp"/>
+            android:layout_marginBottom="7dp" />
 
-        <!-- Task Type -->
+        <!-- Task Type Section -->
         <TextView
             android:id="@+id/tvTaskType2"
             android:layout_width="150dp"
@@ -110,7 +117,7 @@
             android:textColor="#3A3A3A"
             android:layout_marginBottom="20dp" />
 
-        <!-- Task Status -->
+        <!-- Task Status Section -->
         <TextView
             android:id="@+id/tv_status"
             android:layout_width="wrap_content"
@@ -118,7 +125,7 @@
             android:text="@string/task_status"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginBottom="7dp"/>
+            android:layout_marginBottom="7dp" />
 
         <TextView
             android:id="@+id/tvTaskStatus"
@@ -132,14 +139,7 @@
             android:textColor="#3A3A3A"
             android:layout_marginBottom="20dp" />
 
-        <EditText
-            android:id="@+id/greyLine"
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:layout_marginBottom="15dp"/>
-
+        <!-- Objective Section -->
         <TextView
             android:id="@+id/tv_objective"
             android:layout_width="wrap_content"
@@ -157,6 +157,7 @@
             android:textSize="14sp"
             android:layout_marginBottom="30dp" />
 
+        <!-- Materials Section -->
         <TextView
             android:id="@+id/tv_materials"
             android:layout_width="wrap_content"
@@ -174,6 +175,7 @@
             android:textSize="14sp"
             android:layout_marginBottom="30dp" />
 
+        <!-- Action Buttons -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -182,23 +184,23 @@
             android:layout_gravity="center">
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/cancel_button"
+                android:id="@+id/updatetask_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/button_bg"
                 android:text="@string/update"
-                android:layout_marginRight="15dp"/>
+                android:layout_marginRight="15dp" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/submit_button"
+                android:id="@+id/deletetask_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/button_danger"
                 android:text="@string/delete"
                 android:textColor="@color/white"
-                android:layout_marginLeft="15dp"/>
+                android:layout_marginLeft="15dp" />
 
         </LinearLayout>
     </LinearLayout>

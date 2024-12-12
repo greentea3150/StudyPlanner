@@ -35,7 +35,7 @@
     <string name="task">Task</string>
     <string name="homework">Homework</string>
     <string name="category">Category</string>
-    <string name="enter_date_yyyy_mm_dd">Enter date (YYYY-MM-DD)</string>
+    <string name="enter_date_yyyy_mm_dd">(YYYY-MM-DD)</string>
     <string name="date">Date</string>
     <string name="add_a_study_plan">Add a Study Plan</string>
     <!-- TODO: Remove or change this placeholder text -->

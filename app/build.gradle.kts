@@ -55,5 +55,5 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.firebase.core)
-    implementation(libs.androidx.recyclerview)
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
 }

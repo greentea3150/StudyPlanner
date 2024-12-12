@@ -35,10 +35,12 @@
             android:layout_height="50dp"
             android:paddingTop="0dp"
             android:paddingBottom="2dp"
-            android:hint="@string/enter_date_yyyy_mm_dd"
             android:background="@drawable/add_task_form"
+            android:hint="@string/enter_date_yyyy_mm_dd"
             android:gravity="center_vertical"
-            android:inputType="date"
+            android:inputType="none"
+            android:focusable="false"
+            android:clickable="true"
             android:layout_marginBottom="30dp"/>
 
         <TextView
@@ -76,6 +78,9 @@
             android:paddingBottom="2dp"
             android:background="@drawable/add_task_form"
             android:hint="@string/hh_mm"
+            android:inputType="none"
+            android:focusable="false"
+            android:clickable="true"
             android:layout_marginBottom="30dp"/>
 
         <!-- Until EditText -->
@@ -96,6 +101,9 @@
             android:paddingBottom="2dp"
             android:background="@drawable/add_task_form"
             android:hint="@string/hh_mm"
+            android:inputType="none"
+            android:focusable="false"
+            android:clickable="true"
             android:layout_marginBottom="30dp"/>
 
         <!-- Study / Task Name EditText -->
@@ -235,22 +243,22 @@
             android:layout_gravity="center">
 
             <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/cancel_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/ic_bordered_frame"
-            android:text="@string/cancel"
-            android:layout_marginRight="15dp"/>
+                android:id="@+id/cancel_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/ic_bordered_frame"
+                android:text="@string/cancel"
+                android:layout_marginRight="15dp"/>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/submit_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/button_bg"
-            android:text="@string/submit"
-            android:layout_marginLeft="15dp"/>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/submit_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/button_bg"
+                android:text="@string/submit"
+                android:layout_marginLeft="15dp"/>
 
         </LinearLayout>
     </LinearLayout>

@@ -1,19 +1,20 @@
 package com.example.studyplanner
 
+import android.app.Activity
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import android.widget.*
-import com.google.firebase.firestore.FirebaseFirestore
-import android.app.Activity
-import android.content.Intent
-import android.net.Uri
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 
 class AddTaskFragment : Fragment() {
@@ -34,6 +35,7 @@ class AddTaskFragment : Fragment() {
 
     private var imageUri: Uri? = null
     private val categoryList = mutableListOf<String>()
+    private val calendar: Calendar = Calendar.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,10 +60,19 @@ class AddTaskFragment : Fragment() {
         submit_button = view.findViewById(R.id.submit_button)
 
         val rbNotStarted = view.findViewById<RadioButton>(R.id.rb_not_started)
-        rbNotStarted?.isChecked = true
+        rbNotStarted.isChecked = true
+
+        // Disable the other 2 status radio buttons
+        val rbInProgress = view.findViewById<RadioButton>(R.id.rb_in_progress)
+        val rbFinished = view.findViewById<RadioButton>(R.id.rb_finished)
+
+        rbInProgress.isEnabled = false
+        rbFinished.isEnabled = false
 
         setupButtonListeners()
         loadCategories()
+        setupDateTimePickers()
+
         return view
     }
 
@@ -153,6 +164,63 @@ class AddTaskFragment : Fragment() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
         startActivityForResult(intent, REQUEST_IMAGE_SELECT)
+    }
+
+    private fun setupDateTimePickers() {
+        et_date.setOnClickListener {
+            showDatePicker()
+        }
+        et_time_range.setOnClickListener {
+            showTimePicker(et_time_range)
+        }
+        et_until.setOnClickListener {
+            showTimePicker(et_until)
+        }
+    }
+
+    private fun showDatePicker() {
+        val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+            calendar.set(Calendar.YEAR, year)
+            calendar.set(Calendar.MONTH, month)
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            updateDate()
+        }
+
+        DatePickerDialog(
+            requireContext(),
+            dateSetListener,
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        ).show()
+    }
+
+    private fun showTimePicker(editText: EditText) {
+        val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+            calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
+            calendar.set(Calendar.MINUTE, minute)
+            updateTime(editText)
+        }
+
+        TimePickerDialog(
+            requireContext(),
+            timeSetListener,
+            calendar.get(Calendar.HOUR_OF_DAY),
+            calendar.get(Calendar.MINUTE),
+            true
+        ).show()
+    }
+
+    private fun updateDate() {
+        val dateFormat = java.text.SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val formattedDate = dateFormat.format(calendar.time)
+        et_date.setText(formattedDate)
+    }
+
+    private fun updateTime(editText: EditText) {
+        val timeFormat = java.text.SimpleDateFormat("HH:mm", Locale.getDefault())
+        val formattedTime = timeFormat.format(calendar.time)
+        editText.setText(formattedTime)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
