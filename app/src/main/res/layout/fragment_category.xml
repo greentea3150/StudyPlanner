@@ -3,7 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@android:color/white">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Category"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="24dp" />
 
     <!-- Input field for category name -->
     <EditText
@@ -11,7 +24,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter Category Name"
-        android:inputType="text" />
+        android:inputType="text"
+        android:padding="12dp"
+        android:background="@drawable/edittext_background"
+        android:layout_marginBottom="16dp"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/darker_gray" />
 
     <!-- Color picker button -->
     <Button
@@ -19,15 +37,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Pick Color"
-        android:layout_marginTop="16dp" />
+        android:backgroundTint="@android:color/holo_blue_light"
+        android:textColor="@android:color/white"
+        android:padding="12dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp" />
 
     <!-- Selected color preview -->
     <View
         android:id="@+id/selectedColorPreview"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
+        android:background="@android:color/darker_gray"
         android:layout_marginTop="8dp"
-        android:background="#FFFFFF" />
+        android:elevation="4dp" />
 
     <!-- Save button -->
     <Button
@@ -35,5 +59,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save Category"
+        android:backgroundTint="@android:color/holo_green_light"
+        android:textColor="@android:color/white"
+        android:padding="12dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp" />
+
+    <!-- RecyclerView for displaying categories -->
+    <TextView
+        android:id="@+id/textViewCategories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Your Categories"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewCategories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" />
 </LinearLayout>
