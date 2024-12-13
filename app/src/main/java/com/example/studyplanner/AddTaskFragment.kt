@@ -12,10 +12,12 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.work.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class AddTaskFragment : Fragment() {
 
@@ -149,8 +151,14 @@ class AddTaskFragment : Fragment() {
 
         firestore.collection("tasks")
             .add(taskData)
-            .addOnSuccessListener {
+            .addOnSuccessListener { documentReference ->
                 Toast.makeText(requireContext(), "Task added successfully", Toast.LENGTH_SHORT).show()
+
+                // Get the task ID and schedule the notification
+                val taskId = documentReference.id
+                scheduleTaskNotification(taskId, timeRange)
+
+                // Navigate back to the home screen
                 val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
                 bottomNav.selectedItemId = R.id.nav_home
                 requireActivity().supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
@@ -158,6 +166,39 @@ class AddTaskFragment : Fragment() {
             .addOnFailureListener {
                 Toast.makeText(requireContext(), "Failed to add task", Toast.LENGTH_SHORT).show()
             }
+    }
+
+    private fun scheduleTaskNotification(taskId: String, timeRange: String) {
+        // Parse the timeRange to get the hour and minute
+        val timeParts = timeRange.split(":")
+        val hour = timeParts[0].toInt()
+        val minute = timeParts[1].toInt()
+
+        // Set up the calendar object for the task start time
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, hour)
+        calendar.set(Calendar.MINUTE, minute)
+        calendar.set(Calendar.SECOND, 0)
+
+        // Calculate the delay in milliseconds
+        val delay = calendar.timeInMillis - System.currentTimeMillis()
+
+        // If the time has already passed, schedule it for the next day
+        if (delay <= 0) {
+            calendar.add(Calendar.DATE, 1)
+        }
+
+        // Create input data for the worker
+        val inputData = workDataOf("taskId" to taskId)
+
+        // Create the WorkRequest
+        val workRequest = OneTimeWorkRequestBuilder<TaskNotificationWorker>()
+            .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+            .setInputData(inputData)
+            .build()
+
+        // Enqueue the WorkRequest
+        WorkManager.getInstance(requireContext()).enqueue(workRequest)
     }
 
     private fun selectImage() {
