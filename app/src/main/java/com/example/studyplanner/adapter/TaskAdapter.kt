@@ -1,13 +1,17 @@
 package com.example.studyplanner.adapter
 
+import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studyplanner.R
 import com.example.studyplanner.model.Task
+import com.google.firebase.firestore.FirebaseFirestore
 
 class TaskAdapter(
     private var tasks: List<Task>,
@@ -15,6 +19,8 @@ class TaskAdapter(
     private val onDeleteClick: (String) -> Unit, // Add this parameter to handle delete action
     private val isHomePage: Boolean // Add a flag to determine if this is for the homepage
 ) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
+
+    private val firestore = FirebaseFirestore.getInstance()
 
     // Define the view types
     companion object {
@@ -33,12 +39,11 @@ class TaskAdapter(
         private val dateTimeTextView: TextView = itemView.findViewById(R.id.dateTimeTextView)
         private val statusTextView: TextView = itemView.findViewById(R.id.statusTextView)
         private val deleteButton: Button? = itemView.findViewById(R.id.deleteButton)
+        private val cardView: CardView = itemView.findViewById(R.id.cardView) // CardView reference
 
         init {
-            // Check if the edit and delete buttons are present
-            if (deleteButton == null) {
-                // If not, set click listeners to null or handle this case gracefully
-                itemView.findViewById<Button>(R.id.deleteButton)?.setOnClickListener(null)
+            deleteButton?.setOnClickListener {
+                tasks[adapterPosition].id?.let { onDeleteClick(it) }
             }
         }
 
@@ -51,11 +56,8 @@ class TaskAdapter(
             // Set click listener for the task item
             itemView.setOnClickListener { onItemClick(task) }
 
-            // Check if the deleteButton exists and set a click listener
-            deleteButton?.setOnClickListener {
-                // Pass the task's ID to the onDeleteClick function to delete it
-                onDeleteClick(task.id)
-            }
+            // Fetch the category color and set the card color
+            fetchCategoryColor(task.category, cardView)
         }
     }
 
@@ -81,10 +83,24 @@ class TaskAdapter(
         notifyDataSetChanged()
     }
 
-    // Helper function to find the correct time slot index based on task's time range
-    fun getTimeSlotIndex(task: Task): Int {
-        // Use the hour of start time (HH:mm) to determine the correct time slot
-        val startHour = task.getStartHour()
-        return startHour // Assuming your time slots are based on hour intervals (0:00 to 23:00)
+    // Helper function to fetch the category color and set it on the card view
+    private fun fetchCategoryColor(categoryName: String, cardView: CardView) {
+        firestore.collection("Categories")
+            .whereEqualTo("name", categoryName)
+            .get()
+            .addOnSuccessListener { documents ->
+                if (!documents.isEmpty) {
+                    val categoryDoc = documents.documents[0]
+                    val color = categoryDoc.getLong("color")?.toInt() ?: -1
+                    cardView.setCardBackgroundColor(color)
+                } else {
+                    cardView.setCardBackgroundColor(Color.GRAY) // Default color if not found
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("TaskAdapter", "Error fetching category color", e)
+                cardView.setCardBackgroundColor(Color.GRAY) // Default color on failure
+            }
     }
 }
+

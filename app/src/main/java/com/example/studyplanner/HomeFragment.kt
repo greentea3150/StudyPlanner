@@ -18,6 +18,7 @@ import com.example.studyplanner.databinding.FragmentHomeBinding
 import com.example.studyplanner.model.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -29,7 +30,10 @@ class HomeFragment : Fragment() {
     // Firebase
     private lateinit var firestore: FirebaseFirestore
 
-    // Array of RecyclerViews for time slots
+    // For caching the username
+    private var cachedUserName: String? = null
+
+    // RecyclerViews for time slots
     private lateinit var recyclerViews: Array<RecyclerView>
 
     private lateinit var taskAdapter: TaskAdapter
@@ -40,6 +44,9 @@ class HomeFragment : Fragment() {
     private lateinit var clockContainer: RelativeLayout
     private lateinit var handler: Handler
     private val updateInterval: Long = 1000 // 1 second
+
+    // Firestore task count listener
+    private var taskCountListener: ListenerRegistration? = null
 
     private val updateTimeRunnable: Runnable = object : Runnable {
         override fun run() {
@@ -59,10 +66,48 @@ class HomeFragment : Fragment() {
 
         firestore = FirebaseFirestore.getInstance()
 
-        // Initialize Views
+        // Reference to the greeting TextView
+        val greetingTextView = binding.root.findViewById<TextView>(R.id.greetingText)
+
+        // Fetch the user name from cache or Firestore
+        if (cachedUserName != null) {
+            // If cached, use it directly
+            greetingTextView.text = "Hi $cachedUserName ☁️"
+            greetingTextView.visibility = View.VISIBLE
+        } else {
+            // Fetch the username from Firestore
+            greetingTextView.visibility = View.INVISIBLE // Hide until data is fetched
+            val currentUser = FirebaseAuth.getInstance().currentUser
+
+            if (currentUser != null) {
+                val userId = currentUser.uid
+                firestore.collection("users").document(userId).get()
+                    .addOnSuccessListener { documentSnapshot ->
+                        if (documentSnapshot.exists()) {
+                            cachedUserName = documentSnapshot.getString("name") ?: "User"
+                            greetingTextView.text = "Hi $cachedUserName ☁️"
+                        } else {
+                            cachedUserName = "User"
+                            greetingTextView.text = "Hi $cachedUserName ☁️"
+                        }
+                        greetingTextView.visibility = View.VISIBLE
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("FirestoreError", "Error fetching user data", e)
+                        cachedUserName = "User"
+                        greetingTextView.text = "Hi $cachedUserName ☁️"
+                        greetingTextView.visibility = View.VISIBLE
+                    }
+            } else {
+                cachedUserName = "User"
+                greetingTextView.text = "Hi $cachedUserName ☁️"
+                greetingTextView.visibility = View.VISIBLE
+            }
+        }
+
+        // Initialize other views
         setupRecyclerViews()
         setupClock()
-
         fetchTasks()
 
         return view
@@ -148,6 +193,9 @@ class HomeFragment : Fragment() {
                     }
                 }
         }
+
+        // Adding the task count listener to update task count dynamically
+        addTaskCounterListener()
     }
 
     private fun getCurrentDate(): String {
@@ -211,6 +259,33 @@ class HomeFragment : Fragment() {
             .commit()
     }
 
+    // Add real-time listener for task count
+    private fun addTaskCounterListener() {
+        val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
+        val taskCounterTextView = binding.root.findViewById<TextView>(R.id.taskCounter)
+
+        // Check if user is logged in
+        if (currentUserId == null) {
+            taskCounterTextView.text = "0 Tasks" // Default to 0 if no user is logged in
+            return
+        }
+
+        // Add Firestore snapshot listener
+        taskCountListener = firestore.collection("tasks")
+            .whereEqualTo("userId", currentUserId)
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    Log.e("Firestore", "Error listening for task count updates", e)
+                    taskCounterTextView.text = "0 Tasks" // Display 0 if there is an error
+                    return@addSnapshotListener
+                }
+
+                // Update task count display
+                val taskCount = snapshot?.size() ?: 0
+                taskCounterTextView.text = "$taskCount Tasks"
+            }
+    }
+
     override fun onResume() {
         super.onResume()
         handler.post(updateTimeRunnable)
@@ -219,6 +294,7 @@ class HomeFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         handler.removeCallbacks(updateTimeRunnable)
+        taskCountListener?.remove() // Stop the listener when the fragment is paused
     }
 
     override fun onDestroyView() {
