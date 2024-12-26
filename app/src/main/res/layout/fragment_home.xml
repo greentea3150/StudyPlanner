@@ -2,78 +2,98 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     android:background="@android:color/white"
     android:fillViewport="true"
     android:orientation="vertical">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="15dp"
         android:orientation="vertical">
 
-        <!-- Greeting Message -->
-        <TextView
-            android:id="@+id/greetingText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Good morning, User ☁️"
-            android:textSize="24sp"
-            android:layout_marginBottom="8dp"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@android:color/black" />
-
-        <!-- Task Counter -->
-        <TextView
-            android:id="@+id/taskCounter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="8 Tasks"
-            android:textSize="32sp"
-            android:textColor="@android:color/holo_blue_dark"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="4dp" />
-
-        <!-- Motivational Quote -->
-        <TextView
-            android:id="@+id/motivationalQuote"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Never gonna give the assignments up 😭"
-            android:textSize="16sp"
-            android:layout_marginBottom="16dp"
-            android:gravity="center_horizontal"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@android:color/darker_gray" />
-
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center">
-            <!-- Today's Tasks Header -->
-            <TextView
-                android:id="@+id/todayTasksTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Today's Tasks"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp" />
-            <TextView
-                android:id="@+id/dateTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Date"
-                android:textSize="18sp"
-                android:layout_marginBottom="8dp"/>
+            android:layout_height="200dp"
+            android:background="@drawable/sticky_navbar_home">
 
-            <TextView
-                android:id="@+id/timeTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Time"
-                android:textSize="18sp"
-                android:layout_marginBottom="8dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <!-- Greeting Message -->
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/greetingText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/good_morning_user"
+                    android:textSize="24sp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@android:color/black" />
+
+                <!-- Task Counter -->
+                <TextView
+                    android:id="@+id/taskCounter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/_8_tasks"
+                    android:textSize="32sp"
+                    android:textColor="@android:color/white"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="4dp" />
+
+                <!-- Motivational Quote -->
+                <TextView
+                    android:id="@+id/motivationalQuote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/never_gonna_give_the_assignments_up"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="16dp"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@android:color/white" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+                    <!-- Today's Tasks Header -->
+                    <TextView
+                        android:id="@+id/todayTasksTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/today_s_tasks"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp"
+                        android:textColor="@color/white"/>
+                    <TextView
+                        android:id="@+id/dateTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/date_home"
+                        android:textSize="18sp"
+                        android:layout_marginBottom="8dp"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/timeTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/time_home"
+                        android:textSize="18sp"
+                        android:layout_marginBottom="8dp"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+
+
 
         </LinearLayout>
 
@@ -81,6 +101,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="16dp"
             android:layout_marginBottom="16dp">
 
             <!-- New LinearLayout container wrapping both clock and tasks -->
@@ -97,175 +118,175 @@
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="128dp"
-                        android:text="00:00"
+                        android:text="@string/_00_00"
                         android:textSize="14sp"
                         android:gravity="center_horizontal"/>
 
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="132dp"
-                        android:text="01:00"
+                        android:text="@string/_01_00"
                         android:textSize="14sp"
                         android:gravity="center_horizontal"/>
 
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="132dp"
-                        android:text="02:00"
+                        android:text="@string/_02_00"
                         android:textSize="14sp"
                         android:gravity="center_horizontal"/>
 
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="132dp"
-                        android:text="03:00"
+                        android:text="@string/_03_00"
                         android:textSize="14sp"
                         android:gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="132dp"
-                        android:text="04:00"
+                        android:text="@string/_04_00"
                         android:textSize="14sp"
                         android:gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="132dp"
-                        android:text="05:00"
+                        android:text="@string/_05_00"
                         android:textSize="14sp"
                         android:gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="132dp"
-                        android:text="06:00"
+                        android:text="@string/_06_00"
                         android:textSize="14sp"
                         android:gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="132dp"
-                        android:text="07:00"
+                        android:text="@string/_07_00"
                         android:textSize="14sp"
                         android:gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="132dp"
-                        android:text="08:00"
+                        android:text="@string/_08_00"
                         android:textSize="14sp"
                         android:gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="132dp"
-                        android:text="09:00"
+                        android:text="@string/_09_00"
                         android:textSize="14sp"
                         android:gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="132dp"
-                        android:text="10:00"
+                        android:text="@string/_10_00"
                         android:textSize="14sp"
                         android:gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="132dp"
-                        android:text="11:00"
+                        android:text="@string/_11_00"
                         android:textSize="14sp"
                         android:gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="132dp"
-                        android:text="12:00"
+                        android:text="@string/_12_00"
                         android:textSize="14sp"
                         android:gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="132dp"
-                        android:text="13:00"
+                        android:text="@string/_13_00"
                         android:textSize="14sp"
                         android:gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="132dp"
-                        android:text="14:00"
+                        android:text="@string/_14_00"
                         android:textSize="14sp"
                         android:gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="132dp"
-                        android:text="15:00"
+                        android:text="@string/_15_00"
                         android:textSize="14sp"
                         android:gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="132dp"
-                        android:text="16:00"
+                        android:text="@string/_16_00"
                         android:textSize="14sp"
                         android:gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="132dp"
-                        android:text="17:00"
+                        android:text="@string/_17_00"
                         android:textSize="14sp"
                         android:gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="132dp"
-                        android:text="18:00"
+                        android:text="@string/_18_00"
                         android:textSize="14sp"
                         android:gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="132dp"
-                        android:text="19:00"
+                        android:text="@string/_19_00"
                         android:textSize="14sp"
                         android:gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="132dp"
-                        android:text="20:00"
+                        android:text="@string/_20_00"
                         android:textSize="14sp"
                         android:gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="132dp"
-                        android:text="21:00"
+                        android:text="@string/_21_00"
                         android:textSize="14sp"
                         android:gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="132dp"
-                        android:text="22:00"
+                        android:text="@string/_22_00"
                         android:textSize="14sp"
                         android:gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="127dp"
-                        android:text="23:00"
+                        android:text="@string/_23_00"
                         android:textSize="14sp"
                         android:gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:text="24:00"
+                        android:text="@string/_24_00"
                         android:textSize="14sp"
                         android:gravity="center_horizontal" />
                 </LinearLayout>
@@ -294,7 +315,7 @@
                                 android:id="@+id/timeSlot_0_container"
                                 android:layout_width="match_parent"
                                 android:layout_height="132dp"
-                                android:background="@drawable/border_top"
+                                android:background="@drawable/border_top_00"
                                 android:orientation="horizontal">
 
                                 <!-- Placeholder for RecyclerView -->
@@ -662,19 +683,18 @@
                         </LinearLayout>
                     </LinearLayout>
 
-                    <!-- Clock Needle (moves vertically) -->
-                    <View
-                        android:id="@+id/clockNeedle"
-                        android:layout_width="400dp"
-                        android:layout_height="5dp"
-                        android:background="@color/clock_needle"
-                        android:layout_centerHorizontal="true"
-                        android:layout_alignParentTop="true" />
-                </RelativeLayout>
+                <!-- Clock Needle (moves vertically) -->
+                <View
+                    android:id="@+id/clockNeedle"
+                    android:layout_width="400dp"
+                    android:layout_height="5dp"
+                    android:background="@color/clock_needle"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentTop="true" />
+            </RelativeLayout>
 
-            </LinearLayout> <!-- End of new LinearLayout wrapper -->
+        </LinearLayout> <!-- End of new LinearLayout wrapper -->
 
-        </ScrollView>
+    </ScrollView>
 
-    </LinearLayout>
 </LinearLayout>

@@ -56,8 +56,6 @@ class AddTaskFragment : Fragment() {
         et_objective = view.findViewById(R.id.et_objective)
         et_materials_needed = view.findViewById(R.id.et_materials_needed)
         radioGroup_status = view.findViewById(R.id.radioGroup_status)
-        uploaded_image = view.findViewById(R.id.uploaded_image)
-        selectImageButton = view.findViewById(R.id.selectImageButton)
         cancel_button = view.findViewById(R.id.cancel_button)
         submit_button = view.findViewById(R.id.submit_button)
 
@@ -81,10 +79,6 @@ class AddTaskFragment : Fragment() {
     private fun setupButtonListeners() {
         submit_button.setOnClickListener {
             saveTask()
-        }
-
-        selectImageButton.setOnClickListener {
-            selectImage()
         }
 
         cancel_button.setOnClickListener {
@@ -199,12 +193,6 @@ class AddTaskFragment : Fragment() {
 
         // Enqueue the WorkRequest
         WorkManager.getInstance(requireContext()).enqueue(workRequest)
-    }
-
-    private fun selectImage() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "image/*"
-        startActivityForResult(intent, REQUEST_IMAGE_SELECT)
     }
 
     private fun setupDateTimePickers() {
