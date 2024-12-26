@@ -4,6 +4,6 @@
     </style>
 
     <style name="Theme.StudyPlanner" parent="Base.Theme.StudyPlanner">
-        <item name="colorPrimary">@color/main_green</item>
+        <item name="colorPrimary">@color/selected</item>
     </style>
 </resources>

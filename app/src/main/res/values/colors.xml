@@ -3,8 +3,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#9CA3AF</color>
-    <color name="main_green">#D2EB63</color>
+    <color name="main_green">#43B05C</color>
     <color name="not_selected">#D7DADF</color>
-    <color name="selected">#3E6ACB</color>
+    <color name="selected">#43B05C</color>
+    <color name="clock_needle">#803E6ACB</color>
     <color name="transparent">#00FFFFFF</color>
 </resources>

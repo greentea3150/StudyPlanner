@@ -87,13 +87,195 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:paddingTop="10dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="128dp"
+                        android:text="00:00"
+                        android:textSize="14sp"
+                        android:gravity="center_horizontal"/>
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="132dp"
+                        android:text="01:00"
+                        android:textSize="14sp"
+                        android:gravity="center_horizontal"/>
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="132dp"
+                        android:text="02:00"
+                        android:textSize="14sp"
+                        android:gravity="center_horizontal"/>
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="132dp"
+                        android:text="03:00"
+                        android:textSize="14sp"
+                        android:gravity="center_horizontal" />
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="132dp"
+                        android:text="04:00"
+                        android:textSize="14sp"
+                        android:gravity="center_horizontal" />
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="132dp"
+                        android:text="05:00"
+                        android:textSize="14sp"
+                        android:gravity="center_horizontal" />
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="132dp"
+                        android:text="06:00"
+                        android:textSize="14sp"
+                        android:gravity="center_horizontal" />
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="132dp"
+                        android:text="07:00"
+                        android:textSize="14sp"
+                        android:gravity="center_horizontal" />
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="132dp"
+                        android:text="08:00"
+                        android:textSize="14sp"
+                        android:gravity="center_horizontal" />
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="132dp"
+                        android:text="09:00"
+                        android:textSize="14sp"
+                        android:gravity="center_horizontal" />
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="132dp"
+                        android:text="10:00"
+                        android:textSize="14sp"
+                        android:gravity="center_horizontal" />
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="132dp"
+                        android:text="11:00"
+                        android:textSize="14sp"
+                        android:gravity="center_horizontal" />
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="132dp"
+                        android:text="12:00"
+                        android:textSize="14sp"
+                        android:gravity="center_horizontal" />
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="132dp"
+                        android:text="13:00"
+                        android:textSize="14sp"
+                        android:gravity="center_horizontal" />
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="132dp"
+                        android:text="14:00"
+                        android:textSize="14sp"
+                        android:gravity="center_horizontal" />
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="132dp"
+                        android:text="15:00"
+                        android:textSize="14sp"
+                        android:gravity="center_horizontal" />
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="132dp"
+                        android:text="16:00"
+                        android:textSize="14sp"
+                        android:gravity="center_horizontal" />
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="132dp"
+                        android:text="17:00"
+                        android:textSize="14sp"
+                        android:gravity="center_horizontal" />
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="132dp"
+                        android:text="18:00"
+                        android:textSize="14sp"
+                        android:gravity="center_horizontal" />
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="132dp"
+                        android:text="19:00"
+                        android:textSize="14sp"
+                        android:gravity="center_horizontal" />
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="132dp"
+                        android:text="20:00"
+                        android:textSize="14sp"
+                        android:gravity="center_horizontal" />
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="132dp"
+                        android:text="21:00"
+                        android:textSize="14sp"
+                        android:gravity="center_horizontal" />
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="132dp"
+                        android:text="22:00"
+                        android:textSize="14sp"
+                        android:gravity="center_horizontal" />
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="127dp"
+                        android:text="23:00"
+                        android:textSize="14sp"
+                        android:gravity="center_horizontal" />
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:text="24:00"
+                        android:textSize="14sp"
+                        android:gravity="center_horizontal" />
+                </LinearLayout>
 
                 <!-- Clock Container -->
                 <RelativeLayout
                     android:id="@+id/clockContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingTop="7dp"
                     android:layout_marginBottom="16dp">
 
                     <!-- Vertical Time Slots -->
@@ -111,21 +293,9 @@
                             <LinearLayout
                                 android:id="@+id/timeSlot_0_container"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="132dp"
                                 android:background="@drawable/border_top"
                                 android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/timeSlot_0"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="00:00"
-                                    android:textSize="14sp"
-                                    android:gravity="center"
-                                    android:paddingStart="9dp"
-                                    android:paddingEnd="9dp"
-                                    android:paddingTop="18dp"
-                                    android:paddingBottom="18dp" />
 
                                 <!-- Placeholder for RecyclerView -->
                                 <androidx.recyclerview.widget.RecyclerView
@@ -139,21 +309,9 @@
                             <LinearLayout
                                 android:id="@+id/timeSlot_1_container"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="132dp"
                                 android:background="@drawable/border_top"
                                 android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/timeSlot_1"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="01:00"
-                                    android:textSize="14sp"
-                                    android:gravity="center"
-                                    android:paddingStart="9dp"
-                                    android:paddingEnd="9dp"
-                                    android:paddingTop="18dp"
-                                    android:paddingBottom="18dp" />
 
                                 <!-- Placeholder for RecyclerView -->
                                 <androidx.recyclerview.widget.RecyclerView
@@ -167,21 +325,9 @@
                             <LinearLayout
                                 android:id="@+id/timeSlot_2_container"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="132dp"
                                 android:background="@drawable/border_top"
                                 android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/timeSlot_2"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="02:00"
-                                    android:textSize="14sp"
-                                    android:gravity="center"
-                                    android:paddingStart="9dp"
-                                    android:paddingEnd="9dp"
-                                    android:paddingTop="18dp"
-                                    android:paddingBottom="18dp" />
 
                                 <!-- Placeholder for RecyclerView -->
                                 <androidx.recyclerview.widget.RecyclerView
@@ -195,21 +341,9 @@
                             <LinearLayout
                                 android:id="@+id/timeSlot_3_container"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="132dp"
                                 android:background="@drawable/border_top"
                                 android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/timeSlot_3"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="03:00"
-                                    android:textSize="14sp"
-                                    android:gravity="center"
-                                    android:paddingStart="9dp"
-                                    android:paddingEnd="9dp"
-                                    android:paddingTop="18dp"
-                                    android:paddingBottom="18dp" />
 
                                 <!-- Placeholder for RecyclerView -->
                                 <androidx.recyclerview.widget.RecyclerView
@@ -223,21 +357,9 @@
                             <LinearLayout
                                 android:id="@+id/timeSlot_4_container"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="132dp"
                                 android:background="@drawable/border_top"
                                 android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/timeSlot_4"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="04:00"
-                                    android:textSize="14sp"
-                                    android:gravity="center"
-                                    android:paddingStart="9dp"
-                                    android:paddingEnd="9dp"
-                                    android:paddingTop="18dp"
-                                    android:paddingBottom="18dp" />
 
                                 <!-- Placeholder for RecyclerView -->
                                 <androidx.recyclerview.widget.RecyclerView
@@ -251,21 +373,9 @@
                             <LinearLayout
                                 android:id="@+id/timeSlot_5_container"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="132dp"
                                 android:background="@drawable/border_top"
                                 android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/timeSlot_5"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="05:00"
-                                    android:textSize="14sp"
-                                    android:gravity="center"
-                                    android:paddingStart="9dp"
-                                    android:paddingEnd="9dp"
-                                    android:paddingTop="18dp"
-                                    android:paddingBottom="18dp" />
 
                                 <!-- Placeholder for RecyclerView -->
                                 <androidx.recyclerview.widget.RecyclerView
@@ -279,21 +389,9 @@
                             <LinearLayout
                                 android:id="@+id/timeSlot_6_container"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="132dp"
                                 android:background="@drawable/border_top"
                                 android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/timeSlot_6"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="06:00"
-                                    android:textSize="14sp"
-                                    android:gravity="center"
-                                    android:paddingStart="9dp"
-                                    android:paddingEnd="9dp"
-                                    android:paddingTop="18dp"
-                                    android:paddingBottom="18dp" />
 
                                 <!-- Placeholder for RecyclerView -->
                                 <androidx.recyclerview.widget.RecyclerView
@@ -307,21 +405,9 @@
                             <LinearLayout
                                 android:id="@+id/timeSlot_7_container"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="132dp"
                                 android:background="@drawable/border_top"
                                 android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/timeSlot_7"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="07:00"
-                                    android:textSize="14sp"
-                                    android:gravity="center"
-                                    android:paddingStart="9dp"
-                                    android:paddingEnd="9dp"
-                                    android:paddingTop="18dp"
-                                    android:paddingBottom="18dp" />
 
                                 <!-- Placeholder for RecyclerView -->
                                 <androidx.recyclerview.widget.RecyclerView
@@ -335,21 +421,9 @@
                             <LinearLayout
                                 android:id="@+id/timeSlot_8_container"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="132dp"
                                 android:background="@drawable/border_top"
                                 android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/timeSlot_8"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="08:00"
-                                    android:textSize="14sp"
-                                    android:gravity="center"
-                                    android:paddingStart="9dp"
-                                    android:paddingEnd="9dp"
-                                    android:paddingTop="18dp"
-                                    android:paddingBottom="18dp" />
 
                                 <!-- Placeholder for RecyclerView -->
                                 <androidx.recyclerview.widget.RecyclerView
@@ -363,21 +437,9 @@
                             <LinearLayout
                                 android:id="@+id/timeSlot_9_container"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="132dp"
                                 android:background="@drawable/border_top"
                                 android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/timeSlot_9"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="09:00"
-                                    android:textSize="14sp"
-                                    android:gravity="center"
-                                    android:paddingStart="9dp"
-                                    android:paddingEnd="9dp"
-                                    android:paddingTop="18dp"
-                                    android:paddingBottom="18dp" />
 
                                 <!-- Placeholder for RecyclerView -->
                                 <androidx.recyclerview.widget.RecyclerView
@@ -390,21 +452,9 @@
                             <LinearLayout
                                 android:id="@+id/timeSlot_10_container"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="132dp"
                                 android:background="@drawable/border_top"
                                 android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/timeSlot_10"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="10:00"
-                                    android:textSize="14sp"
-                                    android:gravity="center"
-                                    android:paddingStart="9dp"
-                                    android:paddingEnd="9dp"
-                                    android:paddingTop="18dp"
-                                    android:paddingBottom="18dp" />
 
                                 <!-- Placeholder for RecyclerView -->
                                 <androidx.recyclerview.widget.RecyclerView
@@ -417,21 +467,9 @@
                             <LinearLayout
                                 android:id="@+id/timeSlot_11_container"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="132dp"
                                 android:background="@drawable/border_top"
                                 android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/timeSlot_11"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="11:00"
-                                    android:textSize="14sp"
-                                    android:gravity="center"
-                                    android:paddingStart="9dp"
-                                    android:paddingEnd="9dp"
-                                    android:paddingTop="18dp"
-                                    android:paddingBottom="18dp" />
 
                                 <!-- Placeholder for RecyclerView -->
                                 <androidx.recyclerview.widget.RecyclerView
@@ -444,21 +482,9 @@
                             <LinearLayout
                                 android:id="@+id/timeSlot_12_container"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="132dp"
                                 android:background="@drawable/border_top"
                                 android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/timeSlot_12"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="12:00"
-                                    android:textSize="14sp"
-                                    android:gravity="center"
-                                    android:paddingStart="9dp"
-                                    android:paddingEnd="9dp"
-                                    android:paddingTop="18dp"
-                                    android:paddingBottom="18dp" />
 
                                 <!-- Placeholder for RecyclerView -->
                                 <androidx.recyclerview.widget.RecyclerView
@@ -471,21 +497,9 @@
                             <LinearLayout
                                 android:id="@+id/timeSlot_13_container"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="132dp"
                                 android:background="@drawable/border_top"
                                 android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/timeSlot_13"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="13:00"
-                                    android:textSize="14sp"
-                                    android:gravity="center"
-                                    android:paddingStart="9dp"
-                                    android:paddingEnd="9dp"
-                                    android:paddingTop="18dp"
-                                    android:paddingBottom="18dp" />
 
                                 <!-- Placeholder for RecyclerView -->
                                 <androidx.recyclerview.widget.RecyclerView
@@ -498,21 +512,9 @@
                             <LinearLayout
                                 android:id="@+id/timeSlot_14_container"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="132dp"
                                 android:background="@drawable/border_top"
                                 android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/timeSlot_14"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="14:00"
-                                    android:textSize="14sp"
-                                    android:gravity="center"
-                                    android:paddingStart="9dp"
-                                    android:paddingEnd="9dp"
-                                    android:paddingTop="18dp"
-                                    android:paddingBottom="18dp" />
 
                                 <!-- Placeholder for RecyclerView -->
                                 <androidx.recyclerview.widget.RecyclerView
@@ -525,21 +527,9 @@
                             <LinearLayout
                                 android:id="@+id/timeSlot_15_container"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="132dp"
                                 android:background="@drawable/border_top"
                                 android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/timeSlot_15"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="15:00"
-                                    android:textSize="14sp"
-                                    android:gravity="center"
-                                    android:paddingStart="9dp"
-                                    android:paddingEnd="9dp"
-                                    android:paddingTop="18dp"
-                                    android:paddingBottom="18dp" />
 
                                 <!-- Placeholder for RecyclerView -->
                                 <androidx.recyclerview.widget.RecyclerView
@@ -552,21 +542,9 @@
                             <LinearLayout
                                 android:id="@+id/timeSlot_16_container"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="132dp"
                                 android:background="@drawable/border_top"
                                 android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/timeSlot_16"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="16:00"
-                                    android:textSize="14sp"
-                                    android:gravity="center"
-                                    android:paddingStart="9dp"
-                                    android:paddingEnd="9dp"
-                                    android:paddingTop="18dp"
-                                    android:paddingBottom="18dp" />
 
                                 <!-- Placeholder for RecyclerView -->
                                 <androidx.recyclerview.widget.RecyclerView
@@ -579,21 +557,9 @@
                             <LinearLayout
                                 android:id="@+id/timeSlot_17_container"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="132dp"
                                 android:background="@drawable/border_top"
                                 android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/timeSlot_17"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="17:00"
-                                    android:textSize="14sp"
-                                    android:gravity="center"
-                                    android:paddingStart="9dp"
-                                    android:paddingEnd="9dp"
-                                    android:paddingTop="18dp"
-                                    android:paddingBottom="18dp" />
 
                                 <!-- Placeholder for RecyclerView -->
                                 <androidx.recyclerview.widget.RecyclerView
@@ -606,21 +572,9 @@
                             <LinearLayout
                                 android:id="@+id/timeSlot_18_container"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="132dp"
                                 android:background="@drawable/border_top"
                                 android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/timeSlot_18"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="18:00"
-                                    android:textSize="14sp"
-                                    android:gravity="center"
-                                    android:paddingStart="9dp"
-                                    android:paddingEnd="9dp"
-                                    android:paddingTop="18dp"
-                                    android:paddingBottom="18dp" />
 
                                 <!-- Placeholder for RecyclerView -->
                                 <androidx.recyclerview.widget.RecyclerView
@@ -633,21 +587,9 @@
                             <LinearLayout
                                 android:id="@+id/timeSlot_19_container"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="132dp"
                                 android:background="@drawable/border_top"
                                 android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/timeSlot_19"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="19:00"
-                                    android:textSize="14sp"
-                                    android:gravity="center"
-                                    android:paddingStart="9dp"
-                                    android:paddingEnd="9dp"
-                                    android:paddingTop="18dp"
-                                    android:paddingBottom="18dp" />
 
                                 <!-- Placeholder for RecyclerView -->
                                 <androidx.recyclerview.widget.RecyclerView
@@ -660,21 +602,9 @@
                             <LinearLayout
                                 android:id="@+id/timeSlot_20_container"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="132dp"
                                 android:background="@drawable/border_top"
                                 android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/timeSlot_20"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="20:00"
-                                    android:textSize="14sp"
-                                    android:gravity="center"
-                                    android:paddingStart="9dp"
-                                    android:paddingEnd="9dp"
-                                    android:paddingTop="18dp"
-                                    android:paddingBottom="18dp" />
 
                                 <!-- Placeholder for RecyclerView -->
                                 <androidx.recyclerview.widget.RecyclerView
@@ -687,21 +617,9 @@
                             <LinearLayout
                                 android:id="@+id/timeSlot_21_container"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="132dp"
                                 android:background="@drawable/border_top"
                                 android:orientation="vertical">
-
-                                <TextView
-                                    android:id="@+id/timeSlot_21"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="21:00"
-                                    android:textSize="14sp"
-                                    android:gravity="center"
-                                    android:paddingStart="9dp"
-                                    android:paddingEnd="9dp"
-                                    android:paddingTop="18dp"
-                                    android:paddingBottom="18dp" />
 
                                 <!-- Placeholder for RecyclerView -->
                                 <androidx.recyclerview.widget.RecyclerView
@@ -714,21 +632,9 @@
                             <LinearLayout
                                 android:id="@+id/timeSlot_22_container"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="132dp"
                                 android:background="@drawable/border_top"
                                 android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/timeSlot_22"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="22:00"
-                                    android:textSize="14sp"
-                                    android:gravity="center"
-                                    android:paddingStart="9dp"
-                                    android:paddingEnd="9dp"
-                                    android:paddingTop="18dp"
-                                    android:paddingBottom="18dp" />
 
                                 <!-- Placeholder for RecyclerView -->
                                 <androidx.recyclerview.widget.RecyclerView
@@ -741,21 +647,9 @@
                             <LinearLayout
                                 android:id="@+id/timeSlot_23_container"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="132dp"
                                 android:background="@drawable/border_top_bottom"
                                 android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/timeSlot_23"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="23:00"
-                                    android:textSize="14sp"
-                                    android:gravity="center"
-                                    android:paddingStart="9dp"
-                                    android:paddingEnd="9dp"
-                                    android:paddingTop="18dp"
-                                    android:paddingBottom="18dp" />
 
                                 <!-- Placeholder for RecyclerView -->
                                 <androidx.recyclerview.widget.RecyclerView
@@ -773,7 +667,7 @@
                         android:id="@+id/clockNeedle"
                         android:layout_width="400dp"
                         android:layout_height="5dp"
-                        android:background="@color/selected"
+                        android:background="@color/clock_needle"
                         android:layout_centerHorizontal="true"
                         android:layout_alignParentTop="true" />
                 </RelativeLayout>
