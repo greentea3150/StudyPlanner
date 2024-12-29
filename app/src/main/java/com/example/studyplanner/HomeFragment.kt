@@ -147,16 +147,18 @@ class HomeFragment : Fragment() {
         val calendar = Calendar.getInstance()
 
         val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH) + 1
+        val month = calendar.get(Calendar.MONTH)
         val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
 
-        val date = String.format(" | %d-%02d-%02d ", year, month, dayOfMonth)
+        // Use SimpleDateFormat to get the month as text
+        val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+        val date = dateFormat.format(calendar.time)
 
         val hour = calendar.get(Calendar.HOUR_OF_DAY)
         val minute = calendar.get(Calendar.MINUTE)
         val second = calendar.get(Calendar.SECOND)
 
-        val time = String.format("| %02d:%02d:%02d", hour, minute, second)
+        val time = String.format("%02d:%02d:%02d", hour, minute, second)
 
         dateTextView.text = date
         timeTextView.text = time

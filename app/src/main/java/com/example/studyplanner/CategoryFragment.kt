@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studyplanner.adapter.CategoryAdapter
 import com.example.studyplanner.model.Category
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -47,12 +48,11 @@ class CategoryFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_category, container, false)
 
-        val editTextCategoryName = view.findViewById<EditText>(R.id.editTextCategoryName)
-        val buttonPickColor = view.findViewById<Button>(R.id.buttonPickColor)
-        val buttonSaveCategory = view.findViewById<Button>(R.id.buttonSaveCategory)
-        val colorPreview = view.findViewById<View>(R.id.selectedColorPreview)
+        // Find views related to the category list
         val recyclerViewCategories = view.findViewById<RecyclerView>(R.id.recyclerViewCategories)
+        val fabAddCategory = view.findViewById<FloatingActionButton>(R.id.fabAddCategory)
 
+        // Initialize Firestore
         firestore = FirebaseFirestore.getInstance()
 
         // Initialize RecyclerView
@@ -65,44 +65,9 @@ class CategoryFragment : Fragment() {
         // Load existing categories
         loadCategories()
 
-        // Pick a color
-        buttonPickColor.setOnClickListener {
-            showColorPickerDialog { color ->
-                selectedColor = color
-                colorPreview.setBackgroundColor(selectedColor)
-            }
-        }
-
-        // Save category to Firestore
-        buttonSaveCategory.setOnClickListener {
-            val categoryName = editTextCategoryName.text.toString().trim()
-
-            if (categoryName.isEmpty()) {
-                Snackbar.make(view, "Category name cannot be empty!", Snackbar.LENGTH_SHORT).show()
-            } else {
-                val currentUser = FirebaseAuth.getInstance().currentUser
-                if (currentUser != null) {
-                    val userId = currentUser.uid
-                    val category = hashMapOf(
-                        "name" to categoryName,
-                        "color" to selectedColor,
-                        "userId" to userId
-                    )
-
-                    firestore.collection("Categories").add(category)
-                        .addOnSuccessListener {
-                            Toast.makeText(context, "Category saved successfully!", Toast.LENGTH_SHORT).show()
-                            editTextCategoryName.text.clear()
-                            colorPreview.setBackgroundColor(Color.WHITE)
-                            loadCategories() // Refresh list
-                        }
-                        .addOnFailureListener {
-                            Snackbar.make(view, "Failed to save category.", Snackbar.LENGTH_SHORT).show()
-                        }
-                } else {
-                    Snackbar.make(view, "User not authenticated!", Snackbar.LENGTH_SHORT).show()
-                }
-            }
+        // Handle FAB click
+        fabAddCategory.setOnClickListener {
+            showAddCategoryDialog()
         }
 
         return view
@@ -114,14 +79,17 @@ class CategoryFragment : Fragment() {
 
         val recyclerView = dialogView.findViewById<RecyclerView>(R.id.recyclerViewColors)
         recyclerView.layoutManager = GridLayoutManager(context, 5) // 5 columns
+
+        val dialog = builder.setView(dialogView).create() // Create the dialog instance here
+
         recyclerView.adapter = ColorAdapter(presetColors) { color ->
             onColorSelected(color)
-            builder.create().dismiss()
+            dialog.dismiss() // Dismiss the actual dialog instance
         }
 
-        builder.setView(dialogView)
-        builder.show()
+        dialog.show() // Show the dialog after setting up everything
     }
+
 
     private fun loadCategories() {
         val currentUser = FirebaseAuth.getInstance().currentUser
@@ -158,4 +126,65 @@ class CategoryFragment : Fragment() {
                 Snackbar.make(requireView(), "Failed to delete category.", Snackbar.LENGTH_SHORT).show()
             }
     }
+
+    private fun showAddCategoryDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.fragment_category_dialog_add_category, null)
+
+        val editTextCategoryName = dialogView.findViewById<EditText>(R.id.editTextCategoryName)
+        val buttonPickColor = dialogView.findViewById<Button>(R.id.buttonPickColor)
+        val colorPreview = dialogView.findViewById<View>(R.id.selectedColorPreview)
+
+        // Reset selected color to default
+        selectedColor = Color.WHITE
+        colorPreview.setBackgroundColor(selectedColor)
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .setTitle("Add New Category")
+            .setPositiveButton("Save") { _, _ ->
+                val categoryName = editTextCategoryName.text.toString().trim()
+                if (categoryName.isEmpty()) {
+                    Toast.makeText(context, "Category name cannot be empty!", Toast.LENGTH_SHORT).show()
+                } else {
+                    saveCategory(categoryName)
+                }
+            }
+            .setNegativeButton("Cancel", null)
+            .create()
+
+        // Pick a color
+        buttonPickColor.setOnClickListener {
+            showColorPickerDialog { color ->
+                selectedColor = color
+                colorPreview.setBackgroundColor(selectedColor)
+            }
+        }
+
+        dialog.show()
+    }
+
+    private fun saveCategory(categoryName: String) {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser != null) {
+            val userId = currentUser.uid
+            val category = hashMapOf(
+                "name" to categoryName,
+                "color" to selectedColor,
+                "userId" to userId
+            )
+
+            firestore.collection("Categories").add(category)
+                .addOnSuccessListener {
+                    Toast.makeText(context, "Category saved successfully!", Toast.LENGTH_SHORT).show()
+                    loadCategories()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(context, "Failed to save category.", Toast.LENGTH_SHORT).show()
+                }
+        } else {
+            Toast.makeText(context, "User not authenticated!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
 }

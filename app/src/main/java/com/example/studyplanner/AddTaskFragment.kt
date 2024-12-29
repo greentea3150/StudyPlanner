@@ -31,7 +31,6 @@ class AddTaskFragment : Fragment() {
     private lateinit var et_materials_needed: EditText
     private lateinit var radioGroup_status: RadioGroup
     private lateinit var uploaded_image: ImageView
-    private lateinit var selectImageButton: Button
     private lateinit var cancel_button: Button
     private lateinit var submit_button: Button
 
