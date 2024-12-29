@@ -75,7 +75,7 @@ class HomeFragment : Fragment() {
         // Fetch the user name from cache or Firestore
         if (cachedUserName != null) {
             // If cached, use it directly
-            greetingTextView.text = "Hi $cachedUserName ☁️"
+            greetingTextView.text = "Hi, $cachedUserName"
             greetingTextView.visibility = View.VISIBLE
         } else {
             // Fetch the username from Firestore
@@ -88,22 +88,22 @@ class HomeFragment : Fragment() {
                     .addOnSuccessListener { documentSnapshot ->
                         if (documentSnapshot.exists()) {
                             cachedUserName = documentSnapshot.getString("name") ?: "User"
-                            greetingTextView.text = "Hi $cachedUserName ☁️"
+                            greetingTextView.text = "Hi, $cachedUserName"
                         } else {
                             cachedUserName = "User"
-                            greetingTextView.text = "Hi $cachedUserName ☁️"
+                            greetingTextView.text = "Hi, $cachedUserName"
                         }
                         greetingTextView.visibility = View.VISIBLE
                     }
                     .addOnFailureListener { e ->
                         Log.e("FirestoreError", "Error fetching user data", e)
                         cachedUserName = "User"
-                        greetingTextView.text = "Hi $cachedUserName ☁️"
+                        greetingTextView.text = "Hi, $cachedUserName"
                         greetingTextView.visibility = View.VISIBLE
                     }
             } else {
                 cachedUserName = "User"
-                greetingTextView.text = "Hi $cachedUserName ☁️"
+                greetingTextView.text = "Hi, $cachedUserName"
                 greetingTextView.visibility = View.VISIBLE
             }
         }
@@ -112,6 +112,9 @@ class HomeFragment : Fragment() {
         setupRecyclerView()
         setupClock()
         fetchTasks()
+
+        // Call addTaskCounterListener to start listening for task count changes
+        addTaskCounterListener()
 
         return view
     }
@@ -216,32 +219,6 @@ class HomeFragment : Fragment() {
         return dateFormat.format(Calendar.getInstance().time)
     }
 
-    private fun filterTasksByDate(tasks: List<Task>, selectedDate: String): List<Task> {
-        return tasks.filter { task -> task.date == selectedDate }
-    }
-
-    private fun getTimeSlotIndex(task: Task): Int {
-        return task.getStartHour()
-    }
-
-    private fun deleteTaskFromFirestore(taskId: String) {
-        val taskRef = firestore.collection("tasks").document(taskId)
-
-        taskRef.delete()
-            .addOnSuccessListener {
-                val position = tasksList.indexOfFirst { it.id == taskId }
-                if (position >= 0) {
-                    tasksList.removeAt(position)
-                    taskAdapter.notifyItemRemoved(position)
-                }
-
-                fetchTasks()
-            }
-            .addOnFailureListener { e ->
-                Log.e("Firestore", "Error deleting task", e)
-            }
-    }
-
     private fun animateClockNeedle() {
         val currentTimeMillis = System.currentTimeMillis()
         val calendar = Calendar.getInstance()
@@ -261,15 +238,6 @@ class HomeFragment : Fragment() {
             clockNeedle.translationY = animation.animatedValue as Float
         }
         animator.start()
-    }
-
-    private fun showTaskDetails(task: Task) {
-        val taskDetailFragment = TaskDetailsFragment.newInstance(task)
-
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, taskDetailFragment)
-            .addToBackStack(null)
-            .commit()
     }
 
     // Add real-time listener for task count
