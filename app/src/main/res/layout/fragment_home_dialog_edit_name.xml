@@ -1,11 +1,10 @@
 <!-- dialog_edit_name.xml -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@drawable/dialog_background">
+    android:padding="16dp">
 
     <!-- Title -->
     <TextView
@@ -14,8 +13,7 @@
         android:layout_height="wrap_content"
         android:text="Edit Name"
         android:textSize="18sp"
-        android:textColor="@color/white"
-        android:gravity="center"
+        android:textColor="@color/black"
         android:layout_marginBottom="15dp" />
 
     <!-- Edit Text for Name -->
@@ -24,17 +22,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter new name"
-        android:padding="8dp"
-        android:background="@drawable/edittext_bg"
-        android:textColor="@color/black"
-        android:textSize="16sp" />
-
-    <!-- Divider -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/white"
-        android:layout_marginVertical="12dp" />
+        android:inputType="text"
+        android:padding="12dp"
+        android:background="@drawable/edittext_background"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/darker_gray"
+        android:layout_marginBottom="16dp" />
 
     <!-- Buttons -->
     <LinearLayout

@@ -8,4 +8,5 @@
     <color name="selected">#43B05C</color>
     <color name="clock_needle">#803E6ACB</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="danger">#F44336</color>
 </resources>

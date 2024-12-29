@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Existing layout content -->
+    <!-- Main LinearLayout for content -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -11,31 +11,40 @@
         android:padding="16dp"
         android:background="@android:color/white">
 
-        <!-- RecyclerView for displaying categories -->
-        <TextView
-            android:id="@+id/textViewCategories"
+        <!-- Horizontal LinearLayout for TextView and ImageButton -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/your_categories"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp" />
+            android:orientation="horizontal"
+            android:padding="15dp"
+            android:gravity="center_vertical">
 
+            <!-- TextView for "Your Categories" -->
+            <TextView
+                android:id="@+id/textViewCategories"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/your_categories"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_weight="1" />  <!-- This makes the TextView take up available space -->
+
+            <!-- ImageButton -->
+            <ImageButton
+                android:id="@+id/btnAddCategory"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_plus_icon"
+                android:background="@drawable/button_safe"
+                android:layout_marginStart="8dp" />  <!-- Optional: Adds space between the text and the button -->
+        </LinearLayout>
+
+        <!-- RecyclerView for displaying categories -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewCategories"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp" />
     </LinearLayout>
-
-    <!-- Floating Action Button -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAddCategory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:contentDescription="@string/add_category"
-        android:src="@drawable/ic_add" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
@@ -38,7 +39,8 @@ class TaskAdapter(
         private val categoryTextView: TextView = itemView.findViewById(R.id.categoryTextView)
         private val dateTimeTextView: TextView = itemView.findViewById(R.id.dateTimeTextView)
         private val statusTextView: TextView = itemView.findViewById(R.id.statusTextView)
-        private val deleteButton: Button? = itemView.findViewById(R.id.deleteButton)
+        private val editButton: ImageButton? = itemView.findViewById(R.id.editButton)
+        private val deleteButton: ImageButton? = itemView.findViewById(R.id.deleteButton)
         private val cardView: CardView = itemView.findViewById(R.id.cardView) // CardView reference
 
         init {
@@ -56,8 +58,12 @@ class TaskAdapter(
             // Set click listener for the task item
             itemView.setOnClickListener { onItemClick(task) }
 
-            // Fetch the category color and set the card color
-            fetchCategoryColor(task.category, cardView)
+            editButton?.setOnClickListener { onItemClick(task) }
+
+            // Fetch the category color and set the card color for both VIEW_TYPE_HOME and VIEW_TYPE_DEFAULT
+            if (itemViewType == VIEW_TYPE_DEFAULT || itemViewType == VIEW_TYPE_HOME) {
+                fetchCategoryColor(task.category, cardView)
+            }
         }
     }
 

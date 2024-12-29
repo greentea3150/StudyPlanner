@@ -13,9 +13,11 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.studyplanner.adapter.TimeslotAdapter
 import com.example.studyplanner.adapter.TaskAdapter
 import com.example.studyplanner.databinding.FragmentHomeBinding
 import com.example.studyplanner.model.Task
+import com.example.studyplanner.model.TimeSlot
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
@@ -34,7 +36,8 @@ class HomeFragment : Fragment() {
     private var cachedUserName: String? = null
 
     // RecyclerViews for time slots
-    private lateinit var recyclerViews: Array<RecyclerView>
+
+    private lateinit var calendarAdapter: TimeslotAdapter
 
     private lateinit var taskAdapter: TaskAdapter
     private val tasksList = mutableListOf<Task>()
@@ -106,28 +109,20 @@ class HomeFragment : Fragment() {
         }
 
         // Initialize other views
-        setupRecyclerViews()
+        setupRecyclerView()
         setupClock()
         fetchTasks()
 
         return view
     }
 
-    private fun setupRecyclerViews() {
-        recyclerViews = Array(24) { index ->
-            val recyclerViewId = resources.getIdentifier("recyclerView_timeSlot_$index", "id", requireContext().packageName)
-            binding.root.findViewById<RecyclerView>(recyclerViewId)
-        }
+    private fun setupRecyclerView() {
+        val timeSlots = generateTimeSlots()  // This is the list of time slots
+        calendarAdapter = TimeslotAdapter(timeSlots)
 
-        recyclerViews.forEach { recyclerView ->
-            recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            recyclerView.adapter = TaskAdapter(
-                tasks = emptyList(),
-                onItemClick = { task -> showTaskDetails(task) },
-                onDeleteClick = { taskId -> deleteTaskFromFirestore(taskId) },
-                isHomePage = true
-            )
-        }
+        val recyclerView = binding.recyclerViewTimeSlots
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = calendarAdapter
     }
 
     private fun setupClock() {
@@ -164,8 +159,16 @@ class HomeFragment : Fragment() {
         timeTextView.text = time
     }
 
+    private fun generateTimeSlots(): List<TimeSlot> {
+        return (0..23).map { hour ->
+            val formattedHour = String.format("%02d:00", hour)
+            TimeSlot(hour = formattedHour, tasks = emptyList()) // Replace emptyList() with real data
+        }
+    }
+
     private fun fetchTasks() {
         val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
+        val selectedDate = getCurrentDate()  // Get the current date
 
         currentUserId?.let { userId ->
             firestore.collection("tasks")
@@ -176,29 +179,37 @@ class HomeFragment : Fragment() {
                         return@addSnapshotListener
                     }
 
-                    val fetchedTasks = snapshot?.toObjects(Task::class.java) ?: listOf()
-                    tasksList.clear()
-                    tasksList.addAll(fetchedTasks)
+                    // Safeguard: Ensure the fragment's view is still valid
+                    if (view == null) return@addSnapshotListener
 
-                    val currentDate = getCurrentDate()
-                    val tasksForToday = filterTasksByDate(tasksList, currentDate)
+                    // Initialize a map to hold tasks grouped by their starting hour
+                    val taskMap = mutableMapOf<String, MutableList<Task>>()
 
-                    recyclerViews.forEach { recyclerView ->
-                        recyclerView.visibility = View.GONE
-                        (recyclerView.adapter as? TaskAdapter)?.updateTasks(emptyList())
+                    snapshot?.documents?.forEach { document ->
+                        val task = document.toObject(Task::class.java)
+                        task?.let {
+                            // Filter tasks by the selected date
+                            if (it.date == selectedDate) {
+                                val hour = it.timeRange.split(":")[0]
+                                taskMap.getOrPut(hour) { mutableListOf() }.add(it)
+                            }
+                        }
                     }
 
-                    tasksForToday.groupBy { getTimeSlotIndex(it) }.forEach { (index, tasks) ->
-                        val recyclerView = recyclerViews[index]
-                        recyclerView.visibility = View.VISIBLE
-                        (recyclerView.adapter as? TaskAdapter)?.updateTasks(tasks)
+                    // Generate time slots and map the filtered tasks to the correct time slots
+                    val timeSlots = generateTimeSlots().map { timeSlot ->
+                        timeSlot.copy(tasks = taskMap[timeSlot.hour.split(":")[0]] ?: emptyList())
+                    }
+
+                    // Safeguard: Check if the fragment's view is still valid before updating UI
+                    if (_binding != null) {
+                        calendarAdapter = TimeslotAdapter(timeSlots)
+                        binding.recyclerViewTimeSlots.adapter = calendarAdapter
                     }
                 }
         }
-
-        // Adding the task count listener to update task count dynamically
-        addTaskCounterListener()
     }
+
 
     private fun getCurrentDate(): String {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())

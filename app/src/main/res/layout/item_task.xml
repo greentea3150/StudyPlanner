@@ -11,66 +11,73 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:padding="16dp">
 
         <!-- Task Title -->
-        <TextView
-            android:id="@+id/taskNameTextView"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="#3A3A3A" />
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/taskNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#3A3A3A" />
 
-        <!-- Category Text -->
-        <TextView
-            android:id="@+id/categoryTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textColor="#6F6F6F"/>
+            <!-- Category Text -->
+            <TextView
+                android:id="@+id/categoryTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="#6F6F6F"/>
 
-        <!-- Date and Time -->
-        <TextView
-            android:id="@+id/dateTimeTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textColor="#6F6F6F"/>
+            <!-- Date and Time -->
+            <TextView
+                android:id="@+id/dateTimeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="#6F6F6F"/>
 
-        <!-- Status Text -->
-        <TextView
-            android:id="@+id/statusTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textColor="#FF6F6F"/>
+            <!-- Status Text -->
+            <TextView
+                android:id="@+id/statusTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="#FF6F6F"/>
 
+        </LinearLayout>
         <!-- Edit and Delete Buttons -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            android:gravity="end">
+            android:orientation="vertical"
+            android:layout_marginStart="10dp">
 
-            <Button
+            <ImageButton
                 android:id="@+id/editButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:backgroundTint="#4CAF50"
-                android:text="Edit"
-                android:textColor="#FFFFFF"/>
+                android:background="@drawable/button_safe"
+                android:src="@drawable/ic_edit"
+                android:padding="10dp"
+                android:layout_marginBottom="15dp"
+                app:tint="@color/white" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/deleteButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#F44336"
-                android:text="Delete"
-                android:textColor="#FFFFFF"/>
+                android:background="@drawable/button_danger"
+                android:src="@drawable/ic_delete"
+                android:padding="10dp"
+                app:tint="@color/white"/>
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

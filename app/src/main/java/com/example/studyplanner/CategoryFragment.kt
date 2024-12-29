@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -50,7 +51,7 @@ class CategoryFragment : Fragment() {
 
         // Find views related to the category list
         val recyclerViewCategories = view.findViewById<RecyclerView>(R.id.recyclerViewCategories)
-        val fabAddCategory = view.findViewById<FloatingActionButton>(R.id.fabAddCategory)
+        val fabAddCategory = view.findViewById<ImageButton>(R.id.btnAddCategory)
 
         // Initialize Firestore
         firestore = FirebaseFirestore.getInstance()

@@ -1,0 +1,39 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal">
+
+    <!-- Placeholder for time label -->
+    <TextView
+        android:id="@+id/timeLabel"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="7dp">
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/grey" />
+        <!-- RecyclerView for tasks in this time slot (if any) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_timeSlot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" /> <!-- Initially hidden -->
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
