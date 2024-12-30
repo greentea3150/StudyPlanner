@@ -36,7 +36,6 @@ class HomeFragment : Fragment() {
     private var cachedUserName: String? = null
 
     // RecyclerViews for time slots
-
     private lateinit var calendarAdapter: TimeslotAdapter
 
     private lateinit var taskAdapter: TaskAdapter
@@ -51,15 +50,23 @@ class HomeFragment : Fragment() {
     // Firestore task count listener
     private var taskCountListener: ListenerRegistration? = null
 
+    // Add flag for updating date
+    private var isUpdatingDate: Boolean = false
+
     private val updateTimeRunnable: Runnable = object : Runnable {
         override fun run() {
-            animateClockNeedle()
-            val dateTextView = binding.root.findViewById<TextView>(R.id.dateTextView)
-            val timeTextView = binding.root.findViewById<TextView>(R.id.timeTextView)
-            updateDateTime(dateTextView, timeTextView)
+            if (!isUpdatingDate) {
+                animateClockNeedle()
+                val dateTextView = binding.root.findViewById<TextView>(R.id.dateTextView)
+                val timeTextView = binding.root.findViewById<TextView>(R.id.timeTextView)
+                updateDateTime(dateTextView, timeTextView, selectedDate)
+            }
             handler.postDelayed(this, updateInterval)
         }
     }
+
+    // Selected date
+    private var selectedDate: Calendar = Calendar.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -111,7 +118,16 @@ class HomeFragment : Fragment() {
         // Initialize other views
         setupRecyclerView()
         setupClock()
-        fetchTasks()
+        fetchTasksForSelectedDate()
+
+        // Set up click listeners for navigation buttons
+        binding.previousDayButton.setOnClickListener {
+            updateSelectedDate(-1)
+        }
+
+        binding.nextDayButton.setOnClickListener {
+            updateSelectedDate(1)
+        }
 
         // Call addTaskCounterListener to start listening for task count changes
         addTaskCounterListener()
@@ -138,23 +154,20 @@ class HomeFragment : Fragment() {
         handler = Handler(Looper.getMainLooper())
         handler.post(updateTimeRunnable)
 
-        updateDateTime(dateTextView, timeTextView)
+        // Initialize date and time with the selected date
+        updateDateTime(dateTextView, timeTextView, selectedDate)
     }
 
-    private fun updateDateTime(dateTextView: TextView, timeTextView: TextView) {
-        val calendar = Calendar.getInstance()
-
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+    private fun updateDateTime(dateTextView: TextView, timeTextView: TextView, selectedDate: Calendar) {
+        val currentTime = Calendar.getInstance()
 
         // Use SimpleDateFormat to get the month as text
         val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-        val date = dateFormat.format(calendar.time)
+        val date = dateFormat.format(selectedDate.time)
 
-        val hour = calendar.get(Calendar.HOUR_OF_DAY)
-        val minute = calendar.get(Calendar.MINUTE)
-        val second = calendar.get(Calendar.SECOND)
+        val hour = currentTime.get(Calendar.HOUR_OF_DAY)
+        val minute = currentTime.get(Calendar.MINUTE)
+        val second = currentTime.get(Calendar.SECOND)
 
         val time = String.format("%02d:%02d:%02d", hour, minute, second)
 
@@ -169,42 +182,36 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun fetchTasks() {
+    private fun fetchTasksForSelectedDate() {
         val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
-        val selectedDate = getCurrentDate()  // Get the current date
+        val selectedDateStr = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(selectedDate.time)
 
         currentUserId?.let { userId ->
             firestore.collection("tasks")
                 .whereEqualTo("userId", userId)
+                .whereEqualTo("date", selectedDateStr)  // Fetch tasks for the selected date
                 .addSnapshotListener { snapshot, e ->
                     if (e != null) {
                         Log.e("Firestore", "Error fetching tasks", e)
                         return@addSnapshotListener
                     }
 
-                    // Safeguard: Ensure the fragment's view is still valid
                     if (view == null) return@addSnapshotListener
 
-                    // Initialize a map to hold tasks grouped by their starting hour
                     val taskMap = mutableMapOf<String, MutableList<Task>>()
 
                     snapshot?.documents?.forEach { document ->
                         val task = document.toObject(Task::class.java)
                         task?.let {
-                            // Filter tasks by the selected date
-                            if (it.date == selectedDate) {
-                                val hour = it.timeRange.split(":")[0]
-                                taskMap.getOrPut(hour) { mutableListOf() }.add(it)
-                            }
+                            val hour = it.timeRange.split(":")[0]
+                            taskMap.getOrPut(hour) { mutableListOf() }.add(it)
                         }
                     }
 
-                    // Generate time slots and map the filtered tasks to the correct time slots
                     val timeSlots = generateTimeSlots().map { timeSlot ->
                         timeSlot.copy(tasks = taskMap[timeSlot.hour.split(":")[0]] ?: emptyList())
                     }
 
-                    // Safeguard: Check if the fragment's view is still valid before updating UI
                     if (_binding != null) {
                         calendarAdapter = TimeslotAdapter(timeSlots)
                         binding.recyclerViewTimeSlots.adapter = calendarAdapter
@@ -213,10 +220,18 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun updateSelectedDate(days: Int) {
+        isUpdatingDate = true
+        selectedDate.add(Calendar.DAY_OF_YEAR, days)
+        updateDateDisplay()
+        fetchTasksForSelectedDate()
+        isUpdatingDate = false
+    }
 
-    private fun getCurrentDate(): String {
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        return dateFormat.format(Calendar.getInstance().time)
+    private fun updateDateDisplay() {
+        val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+        val dateTextView = binding.root.findViewById<TextView>(R.id.dateTextView)
+        dateTextView.text = dateFormat.format(selectedDate.time)
     }
 
     private fun animateClockNeedle() {
