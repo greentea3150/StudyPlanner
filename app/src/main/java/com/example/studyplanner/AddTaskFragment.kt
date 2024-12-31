@@ -6,6 +6,7 @@ import android.app.TimePickerDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -130,16 +131,16 @@ class AddTaskFragment : Fragment() {
         val status = view?.findViewById<RadioButton>(selectedStatus)?.text.toString()
         val userId = FirebaseAuth.getInstance().currentUser?.uid
 
-        val taskData = hashMapOf(
-            "date" to date,
+        val taskData = linkedMapOf(
+            "taskName" to taskName,
             "category" to category,
+            "date" to date,
             "timeRange" to timeRange,
             "until" to until,
-            "taskName" to taskName,
             "objective" to objective,
-            "materialsNeeded" to materialsNeeded,
             "status" to status,
-            "userId" to (userId ?: "")
+            "materialsNeeded" to materialsNeeded,
+            "userId" to userId
         )
 
         firestore.collection("tasks")
@@ -149,7 +150,7 @@ class AddTaskFragment : Fragment() {
 
                 // Get the task ID and schedule the notification
                 val taskId = documentReference.id
-                scheduleTaskNotification(taskId, timeRange)
+                scheduleTaskNotification(taskId, timeRange, date)
 
                 // Navigate back to the home screen
                 val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
@@ -161,25 +162,37 @@ class AddTaskFragment : Fragment() {
             }
     }
 
-    private fun scheduleTaskNotification(taskId: String, timeRange: String) {
-        // Parse the timeRange to get the hour and minute
+    private fun scheduleTaskNotification(taskId: String, timeRange: String, date: String) {
+        // Parse the date and time
+        val dateParts = date.split("-")
+        val year = dateParts[0].toInt()
+        val month = dateParts[1].toInt() - 1 // Calendar month is 0-based
+        val day = dateParts[2].toInt()
+
         val timeParts = timeRange.split(":")
         val hour = timeParts[0].toInt()
         val minute = timeParts[1].toInt()
 
-        // Set up the calendar object for the task start time
-        val calendar = Calendar.getInstance()
-        calendar.set(Calendar.HOUR_OF_DAY, hour)
-        calendar.set(Calendar.MINUTE, minute)
-        calendar.set(Calendar.SECOND, 0)
+        // Set up the calendar object for the task's scheduled time
+        val taskCalendar = Calendar.getInstance()
+        taskCalendar.set(Calendar.YEAR, year)
+        taskCalendar.set(Calendar.MONTH, month)
+        taskCalendar.set(Calendar.DAY_OF_MONTH, day)
+        taskCalendar.set(Calendar.HOUR_OF_DAY, hour)
+        taskCalendar.set(Calendar.MINUTE, minute)
+        taskCalendar.set(Calendar.SECOND, 0)
+
+        val currentTimeMillis = System.currentTimeMillis()
+        val taskTimeMillis = taskCalendar.timeInMillis
+
+        // Check if the scheduled time is valid
+        if (taskTimeMillis <= currentTimeMillis) {
+            Log.w("TaskNotification", "Scheduled time is in the past. Notification not scheduled.")
+            return // Don't schedule past notifications
+        }
 
         // Calculate the delay in milliseconds
-        val delay = calendar.timeInMillis - System.currentTimeMillis()
-
-        // If the time has already passed, schedule it for the next day
-        if (delay <= 0) {
-            calendar.add(Calendar.DATE, 1)
-        }
+        val delay = taskTimeMillis - currentTimeMillis
 
         // Create input data for the worker
         val inputData = workDataOf("taskId" to taskId)
@@ -192,6 +205,7 @@ class AddTaskFragment : Fragment() {
 
         // Enqueue the WorkRequest
         WorkManager.getInstance(requireContext()).enqueue(workRequest)
+        Log.d("TaskNotification", "Notification scheduled for $date $timeRange (delay: $delay ms)")
     }
 
     private fun setupDateTimePickers() {
