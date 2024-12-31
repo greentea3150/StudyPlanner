@@ -5,5 +5,6 @@
 
     <style name="Theme.StudyPlanner" parent="Base.Theme.StudyPlanner">
         <item name="colorPrimary">@color/selected</item>
+        <item name="colorSecondaryContainer">@color/green_highlight</item>
     </style>
 </resources>

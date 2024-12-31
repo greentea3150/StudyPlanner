@@ -9,4 +9,5 @@
     <color name="clock_needle">#803E6ACB</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="danger">#F44336</color>
+    <color name="green_highlight">#EEF8DE</color>
 </resources>
