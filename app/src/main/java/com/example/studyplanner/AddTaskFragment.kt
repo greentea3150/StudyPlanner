@@ -163,7 +163,6 @@ class AddTaskFragment : Fragment() {
     }
 
     private fun scheduleTaskNotification(taskId: String, timeRange: String, date: String) {
-        // Parse the date and time
         val dateParts = date.split("-")
         val year = dateParts[0].toInt()
         val month = dateParts[1].toInt() - 1 // Calendar month is 0-based
@@ -173,7 +172,6 @@ class AddTaskFragment : Fragment() {
         val hour = timeParts[0].toInt()
         val minute = timeParts[1].toInt()
 
-        // Set up the calendar object for the task's scheduled time
         val taskCalendar = Calendar.getInstance()
         taskCalendar.set(Calendar.YEAR, year)
         taskCalendar.set(Calendar.MONTH, month)
@@ -185,27 +183,30 @@ class AddTaskFragment : Fragment() {
         val currentTimeMillis = System.currentTimeMillis()
         val taskTimeMillis = taskCalendar.timeInMillis
 
-        // Check if the scheduled time is valid
         if (taskTimeMillis <= currentTimeMillis) {
             Log.w("TaskNotification", "Scheduled time is in the past. Notification not scheduled.")
-            return // Don't schedule past notifications
+            return
         }
 
-        // Calculate the delay in milliseconds
         val delay = taskTimeMillis - currentTimeMillis
-
-        // Create input data for the worker
         val inputData = workDataOf("taskId" to taskId)
 
-        // Create the WorkRequest
+        // Buat WorkRequest baru
         val workRequest = OneTimeWorkRequestBuilder<TaskNotificationWorker>()
             .setInitialDelay(delay, TimeUnit.MILLISECONDS)
             .setInputData(inputData)
             .build()
 
-        // Enqueue the WorkRequest
-        WorkManager.getInstance(requireContext()).enqueue(workRequest)
-        Log.d("TaskNotification", "Notification scheduled for $date $timeRange (delay: $delay ms)")
+        // Gunakan enqueueUniqueWork untuk mengganti pekerjaan lama dengan tag taskId
+        WorkManager.getInstance(requireContext())
+            .beginUniqueWork(
+                taskId, // Nama unik untuk pekerjaan ini
+                ExistingWorkPolicy.REPLACE, // Gantikan pekerjaan lama
+                workRequest
+            )
+            .enqueue()
+
+        Log.d("TaskNotification", "Notification scheduled for $date $timeRange (delay: $delay ms) with tag: $taskId")
     }
 
     private fun setupDateTimePickers() {

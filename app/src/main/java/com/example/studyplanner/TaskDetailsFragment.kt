@@ -16,6 +16,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.graphics.toColorInt
 import androidx.fragment.app.Fragment
+import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
@@ -267,15 +268,24 @@ class TaskDetailsFragment : Fragment() {
         val delay = taskTimeMillis - currentTimeMillis
         val inputData = workDataOf("taskId" to taskId)
 
+        // Buat WorkRequest baru
         val workRequest = OneTimeWorkRequestBuilder<TaskNotificationWorker>()
             .setInitialDelay(delay, TimeUnit.MILLISECONDS)
             .setInputData(inputData)
-            .addTag(taskId)
             .build()
 
-        WorkManager.getInstance(requireContext()).enqueue(workRequest)
-        Log.d("TaskNotification", "Notification scheduled for $date $timeRange (delay: $delay ms)")
+        // Gunakan enqueueUniqueWork untuk mengganti pekerjaan lama dengan tag taskId
+        WorkManager.getInstance(requireContext())
+            .beginUniqueWork(
+                taskId, // Nama unik untuk pekerjaan ini
+                ExistingWorkPolicy.REPLACE, // Gantikan pekerjaan lama
+                workRequest
+            )
+            .enqueue()
+
+        Log.d("TaskNotification", "Notification scheduled for $date $timeRange (delay: $delay ms) with tag: $taskId")
     }
+
 
     private fun getSelectedStatus(): String {
         val selectedStatusId = radioGroupStatus.checkedRadioButtonId
