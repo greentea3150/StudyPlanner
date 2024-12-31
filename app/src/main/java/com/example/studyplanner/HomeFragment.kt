@@ -12,9 +12,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.studyplanner.adapter.TimeslotAdapter
-import com.example.studyplanner.adapter.TaskAdapter
 import com.example.studyplanner.databinding.FragmentHomeBinding
 import com.example.studyplanner.model.Task
 import com.example.studyplanner.model.TimeSlot
@@ -22,7 +20,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
 class HomeFragment : Fragment() {
 
@@ -37,9 +36,6 @@ class HomeFragment : Fragment() {
 
     // RecyclerViews for time slots
     private lateinit var calendarAdapter: TimeslotAdapter
-
-    private lateinit var taskAdapter: TaskAdapter
-    private val tasksList = mutableListOf<Task>()
 
     // Clock Needle
     private lateinit var clockNeedle: View

@@ -3,13 +3,6 @@ package com.example.studyplanner
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
-import android.text.style.ForegroundColorSpan
-import android.text.style.UnderlineSpan
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -21,7 +14,6 @@ import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.MotionEvent
 import android.widget.ImageButton
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 
 class RegisterActivity : AppCompatActivity() {
@@ -48,10 +40,9 @@ class RegisterActivity : AppCompatActivity() {
         confirmPasswordEditText = findViewById(R.id.register_confirm_password)
         registerButton = findViewById(R.id.register_button)
         loginRedirect = findViewById(R.id.login_redirect)
-        backButton = findViewById(R.id.back_button)
 
-        setUpPasswordToggle(passwordEditText, isPasswordVisible)
-        setUpPasswordToggle(confirmPasswordEditText, isConfirmPasswordVisible)
+        setUpPasswordToggle(passwordEditText)
+        setUpPasswordToggle(confirmPasswordEditText)
 
         mAuth = FirebaseAuth.getInstance()
 
@@ -100,14 +91,10 @@ class RegisterActivity : AppCompatActivity() {
         loginRedirect.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
         }
-
-        backButton.setOnClickListener {
-            startActivity(Intent(this, LoginActivity::class.java))
-        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private fun setUpPasswordToggle(editText: EditText, isVisible: Boolean) {
+    private fun setUpPasswordToggle(editText: EditText) {
         editText.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_UP) {
                 if (event.rawX >= (editText.right - editText.compoundDrawables[2].bounds.width())) {

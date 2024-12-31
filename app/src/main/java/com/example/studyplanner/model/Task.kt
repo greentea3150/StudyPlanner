@@ -18,9 +18,4 @@ data class Task(
 ) : Serializable {
     constructor() : this("", "", "", "", "", "", "", "", "", "")
 
-    // Helper function to extract the hour (int) from the time string
-    fun getStartHour(): Int {
-        return timeRange.split(":")[0].toInt()
-    }
-
 }

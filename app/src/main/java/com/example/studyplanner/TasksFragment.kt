@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.example.studyplanner.R
 import com.example.studyplanner.adapter.TaskAdapter
 import com.example.studyplanner.model.Task
 
@@ -103,11 +102,5 @@ class TasksFragment : Fragment() {
             .replace(R.id.fragment_container, taskDetailFragment) // Replace with your container ID
             .addToBackStack(null) // Add to backstack for navigation
             .commit()
-    }
-
-    companion object {
-        fun newInstance(): TasksFragment {
-            return TasksFragment()
-        }
     }
 }

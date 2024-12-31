@@ -9,8 +9,8 @@
         android:icon="@drawable/ic_tasks_selector" /> <!-- Use selector for tasks icon -->
     <item
         android:id="@+id/nav_add_task"
-        android:title="@string/add_task"
-        android:icon="@drawable/ic_add_selector" /> <!-- Use selector for add task icon -->
+        android:title="@string/category"
+        android:icon="@drawable/ic_categories" /> <!-- Use selector for add task icon -->
     <item
         android:id="@+id/nav_profile"
         android:title="@string/profile"

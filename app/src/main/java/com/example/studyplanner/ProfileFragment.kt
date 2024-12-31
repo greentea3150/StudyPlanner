@@ -15,7 +15,6 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 
 class ProfileFragment : Fragment() {
@@ -257,7 +256,4 @@ class ProfileFragment : Fragment() {
             Toast.makeText(requireContext(), "User not logged in.", Toast.LENGTH_LONG).show()
         }
     }
-
-
-
 }

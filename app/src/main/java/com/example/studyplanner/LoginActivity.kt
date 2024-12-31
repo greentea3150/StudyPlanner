@@ -21,7 +21,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 
 class LoginActivity : AppCompatActivity() {
 
@@ -32,8 +31,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var backButton: ImageButton
 
-    private var isPasswordVisible = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -42,7 +39,6 @@ class LoginActivity : AppCompatActivity() {
         passwordEditText = findViewById(R.id.login_password)
         loginButton = findViewById(R.id.login_button)
         registerRedirect = findViewById(R.id.register_redirect)
-        backButton = findViewById(R.id.back_button)
 
         setUpPasswordToggle(passwordEditText)
 
@@ -87,33 +83,6 @@ class LoginActivity : AppCompatActivity() {
                     }
             }
         }
-
-        backButton.setOnClickListener {
-            startActivity(Intent(this, RegisterActivity::class.java))
-        }
-    }
-
-    private fun fetchUserData(userId: String) {
-        val usersRef = FirebaseDatabase.getInstance().getReference("users").child(userId)
-        usersRef.get()
-            .addOnSuccessListener { snapshot ->
-                val name = snapshot.child("name").value?.toString()
-                val email = snapshot.child("email").value?.toString()
-
-                if (name != null && email != null) {
-                    // Pass the data to MainActivity via Intent
-                    val intent = Intent(this, MainActivity::class.java)
-                    intent.putExtra("user_name", name)
-                    intent.putExtra("user_email", email)
-                    startActivity(intent)
-                    finish()
-                } else {
-                    Toast.makeText(this, "Failed to fetch user details.", Toast.LENGTH_SHORT).show()
-                }
-            }
-            .addOnFailureListener { exception ->
-                Toast.makeText(this, "Error fetching data: ${exception.message}", Toast.LENGTH_LONG).show()
-            }
     }
 
     @SuppressLint("ClickableViewAccessibility")

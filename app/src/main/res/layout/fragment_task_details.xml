@@ -213,6 +213,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/button_bg"
                 android:text="@string/update"
+                android:textColor="@color/white"
                 android:layout_marginRight="10dp" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -222,6 +223,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/button_danger"
                 android:text="@string/delete"
+                android:textColor="@color/white"
                 android:layout_marginLeft="10dp" />
         </LinearLayout>
     </LinearLayout>
