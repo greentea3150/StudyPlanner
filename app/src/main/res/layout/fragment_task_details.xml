@@ -2,202 +2,278 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="#F9F9F9">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <!-- Task Title -->
-        <TextView
-            android:id="@+id/task_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="[insert_task_title]"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="18dp" />
-
-        <!-- Task Creation Date -->
-        <TextView
-            android:id="@+id/task_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Created on [month]_[date],_[year]"
-            android:textSize="14sp"
-            android:layout_marginBottom="30dp"
-            android:layout_marginLeft="18dp" />
+        android:orientation="vertical"
+        android:spacing="8dp">
 
         <!-- Task Name Section -->
-        <TextView
-            android:id="@+id/tv_task_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/study_task_name"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="7dp" />
-
-        <EditText
-            android:id="@+id/et_task_name"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/enter_task_name"
-            android:background="@android:drawable/edit_text"
-            android:inputType="text"
-            android:layout_marginBottom="10dp" />
+            android:orientation="vertical"
+            android:background="@drawable/section_box_bg"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/tv_task_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/study_task_name"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/et_task_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/enter_task_name"
+                android:background="@drawable/edit_text_bg"
+                android:inputType="text"
+                android:layout_marginBottom="12dp"
+                android:padding="12dp" />
+        </LinearLayout>
 
         <!-- Objective Section -->
-        <TextView
-            android:id="@+id/tv_objective"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/objective"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="7dp" />
-
-        <EditText
-            android:id="@+id/et_objective"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/enter_objective"
-            android:background="@android:drawable/edit_text"
-            android:inputType="text"
-            android:layout_marginBottom="10dp" />
+            android:orientation="vertical"
+            android:background="@drawable/section_box_bg"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/tv_objective"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/objective"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/et_objective"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/enter_objective"
+                android:background="@drawable/edit_text_bg"
+                android:inputType="text"
+                android:layout_marginBottom="12dp"
+                android:padding="12dp" />
+        </LinearLayout>
 
         <!-- Materials Section -->
-        <TextView
-            android:id="@+id/tv_materials_needed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/materials_needed"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="7dp" />
-
-        <EditText
-            android:id="@+id/et_materials_needed"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/enter_materials_needed"
-            android:background="@android:drawable/edit_text"
-            android:inputType="text"
-            android:layout_marginBottom="10dp" />
+            android:orientation="vertical"
+            android:background="@drawable/section_box_bg"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/tv_materials_needed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/materials_needed"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/et_materials_needed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/enter_materials_needed"
+                android:background="@drawable/edit_text_bg"
+                android:inputType="text"
+                android:layout_marginBottom="12dp"
+                android:padding="12dp" />
+        </LinearLayout>
 
         <!-- Category Section -->
-        <TextView
-            android:id="@+id/tv_category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/category"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="7dp" />
-
-        <Spinner
-            android:id="@+id/spinner_category"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp" />
+            android:orientation="vertical"
+            android:background="@drawable/section_box_bg"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/tv_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/category"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:layout_marginBottom="8dp" />
+
+            <Spinner
+                android:id="@+id/spinner_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/spinner_bg" />
+        </LinearLayout>
 
         <!-- Status Section -->
-        <TextView
-            android:id="@+id/tv_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/status"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="7dp" />
-
-        <RadioGroup
-            android:id="@+id/radioGroup_status"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp">
-            <RadioButton
-                android:id="@+id/rb_not_started"
+            android:orientation="vertical"
+            android:background="@drawable/section_box_bg"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/tv_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/not_started" />
-            <RadioButton
-                android:id="@+id/rb_in_progress"
-                android:layout_width="wrap_content"
+                android:text="@string/status"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:layout_marginBottom="8dp" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup_status"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/in_progress" />
-            <RadioButton
-                android:id="@+id/rb_finished"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/finished" />
-        </RadioGroup>
+                android:layout_marginBottom="12dp">
+                <RadioButton
+                    android:id="@+id/rb_not_started"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/not_started" />
+                <RadioButton
+                    android:id="@+id/rb_in_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/in_progress" />
+                <RadioButton
+                    android:id="@+id/rb_finished"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/finished" />
+            </RadioGroup>
+        </LinearLayout>
 
         <!-- Date Section -->
-        <TextView
-            android:id="@+id/tv_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/date"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="7dp" />
-
-        <EditText
-            android:id="@+id/et_date"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/enter_date_yyyy_mm_dd"
-            android:background="@android:drawable/edit_text"
-            android:gravity="center_vertical"
-            android:inputType="date"
-            android:focusable="false"
-            android:clickable="true"
-            android:layout_marginBottom="10dp" />
+            android:orientation="vertical"
+            android:background="@drawable/section_box_bg"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/date"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/et_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/enter_date_yyyy_mm_dd"
+                android:background="@drawable/edit_text_bg"
+                android:gravity="center_vertical"
+                android:inputType="date"
+                android:focusable="false"
+                android:clickable="true"
+                android:layout_marginBottom="12dp"
+                android:padding="12dp" />
+        </LinearLayout>
 
         <!-- Time Range Section -->
-        <TextView
-            android:id="@+id/tv_time_range"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/time_range"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="7dp" />
-
-        <EditText
-            android:id="@+id/et_time_range"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hh_mm"
-            android:background="@android:drawable/edit_text"
-            android:inputType="time"
-            android:focusable="false"
-            android:clickable="true"
-            android:layout_marginBottom="10dp" />
+            android:orientation="vertical"
+            android:background="@drawable/section_box_bg"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/tv_time_range"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/time_range"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/et_time_range"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hh_mm"
+                android:background="@drawable/edit_text_bg"
+                android:inputType="time"
+                android:focusable="false"
+                android:clickable="true"
+                android:layout_marginBottom="12dp"
+                android:padding="12dp" />
+        </LinearLayout>
 
         <!-- Until Section -->
-        <TextView
-            android:id="@+id/tv_until"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/until"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="7dp" />
-
-        <EditText
-            android:id="@+id/et_until"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hh_mm"
-            android:background="@android:drawable/edit_text"
-            android:inputType="time"
-            android:focusable="false"
-            android:clickable="true"
-            android:layout_marginBottom="10dp" />
+            android:orientation="vertical"
+            android:background="@drawable/section_box_bg"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/tv_until"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/until"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/et_until"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hh_mm"
+                android:background="@drawable/edit_text_bg"
+                android:inputType="time"
+                android:focusable="false"
+                android:clickable="true"
+                android:layout_marginBottom="12dp"
+                android:padding="12dp" />
+        </LinearLayout>
 
         <!-- Action Buttons -->
         <LinearLayout
@@ -214,7 +290,10 @@
                 android:background="@drawable/button_bg"
                 android:text="@string/update"
                 android:textColor="@color/white"
-                android:layout_marginRight="10dp" />
+                android:layout_marginRight="10dp"
+                android:padding="12dp"
+                android:layout_marginBottom="10dp"
+                android:textSize="16sp" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/deletetask_button"
@@ -224,7 +303,11 @@
                 android:background="@drawable/button_danger"
                 android:text="@string/delete"
                 android:textColor="@color/white"
-                android:layout_marginLeft="10dp" />
+                android:layout_marginLeft="10dp"
+                android:padding="12dp"
+                android:layout_marginBottom="10dp"
+                android:textSize="16sp" />
         </LinearLayout>
+
     </LinearLayout>
 </ScrollView>
