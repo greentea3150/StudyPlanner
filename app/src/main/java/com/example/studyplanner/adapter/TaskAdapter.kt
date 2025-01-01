@@ -1,6 +1,7 @@
 package com.example.studyplanner.adapter
 
 import android.graphics.Color
+import android.graphics.Paint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -54,6 +55,23 @@ class TaskAdapter(
             dateTimeTextView.text = "${task.date} | ${task.timeRange} - ${task.until}"
             statusTextView.text = task.status
 
+            // Set the color of the status text based on the task's status
+            when (task.status) {
+                "In Progress" -> statusTextView.setTextColor(Color.YELLOW) // Yellow for "In Progress"
+                "Finished" -> {
+                    statusTextView.setTextColor(Color.GREEN) // Green for "Finished"
+                    // Apply strikethrough and change task name color to gray
+                    taskNameTextView.setPaintFlags(taskNameTextView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG)
+                    taskNameTextView.setTextColor(Color.GRAY) // Gray for finished tasks
+                }
+                else -> {
+                    statusTextView.setTextColor(Color.RED) // Default color for other statuses
+                    // Remove strikethrough and reset task name color
+                    taskNameTextView.setPaintFlags(taskNameTextView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv())
+                    taskNameTextView.setTextColor(Color.BLACK) // Reset to black for other tasks
+                }
+            }
+
             // Set click listener for the task item
             itemView.setOnClickListener { onItemClick(task) }
 
@@ -64,6 +82,8 @@ class TaskAdapter(
                 fetchCategoryColor(task.category, cardView)
             }
         }
+
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
