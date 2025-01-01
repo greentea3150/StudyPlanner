@@ -10,5 +10,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:background="@android:color/darker_gray"
+        android:contentDescription="@string/item_color"
         android:scaleType="centerCrop" />
 </FrameLayout>

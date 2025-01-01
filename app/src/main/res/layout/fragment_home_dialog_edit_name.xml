@@ -11,7 +11,7 @@
         android:id="@+id/dialog_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Edit Name"
+        android:text="@string/edit_name"
         android:textSize="18sp"
         android:textColor="@color/black"
         android:layout_marginBottom="15dp" />
@@ -21,7 +21,8 @@
         android:id="@+id/edit_name_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter new name"
+        android:autofillHints="New Name"
+        android:hint="@string/enter_new_name"
         android:inputType="text"
         android:padding="12dp"
         android:background="@drawable/edittext_background"

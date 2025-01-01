@@ -1,5 +1,6 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
@@ -21,7 +22,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:ignore="UselessParent">
 
                 <!-- Greeting Message -->
                 <TextView
@@ -79,7 +81,7 @@
                 android:id="@+id/previousDayButton"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="Prev" />
+                android:text="@string/prev" />
             <TextView
                 android:id="@+id/dateTextView"
                 android:layout_width="wrap_content"
@@ -93,7 +95,7 @@
                 android:id="@+id/nextDayButton"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="Next" />
+                android:text="@string/next" />
         </LinearLayout>
 
         </LinearLayout>
@@ -117,7 +119,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="7dp"
-                    android:layout_marginBottom="16dp">
+                    android:layout_marginBottom="16dp"
+                    tools:ignore="UselessParent">
 
                     <!-- Vertical Time Slots -->
                     <LinearLayout

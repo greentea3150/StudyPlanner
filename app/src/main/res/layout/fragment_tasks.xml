@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="My Schedules"
+        android:text="@string/my_schedules"
         android:textColor="#3A3A3A"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_sort_by_size"
-            android:contentDescription="Filter"
+            android:contentDescription="@string/filter"
             android:layout_gravity="end"
             android:paddingTop="5dp"
             android:background="?attr/selectableItemBackground" />
@@ -61,7 +61,7 @@
             android:id="@+id/clearSearchButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Clear"
+            android:text="@string/clear"
             android:layout_marginEnd="8dp" />
 
         <!-- Search Button -->
@@ -69,7 +69,7 @@
             android:id="@+id/searchButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Search"
+            android:text="@string/search"
             android:layout_marginStart="8dp" />
     </LinearLayout>
 

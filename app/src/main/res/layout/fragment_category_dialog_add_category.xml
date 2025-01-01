@@ -9,6 +9,7 @@
         android:id="@+id/editTextCategoryName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:autofillHints="Category Name"
         android:hint="@string/enter_category_name"
         android:inputType="text"
         android:padding="12dp"
