@@ -1,5 +1,6 @@
 package com.example.studyplanner
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
@@ -12,9 +13,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioGroup
 import android.widget.Spinner
-import android.widget.TextView
 import android.widget.Toast
-import androidx.core.graphics.toColorInt
 import androidx.fragment.app.Fragment
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
@@ -83,8 +82,10 @@ class TaskDetailsFragment : Fragment() {
             updateTaskInFirestore()
         }
 
+        // Handle delete button click
         deleteButton.setOnClickListener {
-            deleteTaskInFirestore()
+            // Show confirmation dialog before deleting
+            showDeleteConfirmationDialog()
         }
 
         return view
@@ -227,16 +228,38 @@ class TaskDetailsFragment : Fragment() {
 
     private fun deleteTaskInFirestore() {
         firestore.collection("tasks")
-            .document(task.id) // Menggunakan task.id sebagai ID dokumen
+            .document(task.id) // Assuming task.id is the document ID
             .delete()
             .addOnSuccessListener {
                 Toast.makeText(requireContext(), "Task deleted successfully!", Toast.LENGTH_SHORT).show()
-                // Kembali ke layar sebelumnya atau perbarui UI
                 requireActivity().supportFragmentManager.popBackStack()
             }
             .addOnFailureListener { e ->
                 Toast.makeText(requireContext(), "Failed to delete task: ${e.message}", Toast.LENGTH_SHORT).show()
             }
+    }
+
+    private fun showDeleteConfirmationDialog() {
+        val dialogBuilder = AlertDialog.Builder(requireContext())
+
+        // Set the dialog title and message
+        dialogBuilder.setTitle("Delete Task")
+        dialogBuilder.setMessage("Are you sure you want to delete this task?")
+
+        // Set up the "Cancel" button
+        dialogBuilder.setNegativeButton("Cancel") { dialog, _ ->
+            dialog.dismiss()  // Dismiss the dialog if the user chooses to cancel
+        }
+
+        // Set up the "Delete" button
+        dialogBuilder.setPositiveButton("Delete") { dialog, _ ->
+            deleteTaskInFirestore()
+            dialog.dismiss()  // Dismiss the dialog after performing the delete operation
+        }
+
+        // Create and show the dialog
+        val alertDialog = dialogBuilder.create()
+        alertDialog.show()
     }
 
     private fun scheduleTaskNotification(taskId: String, timeRange: String, date: String) {
@@ -268,24 +291,23 @@ class TaskDetailsFragment : Fragment() {
         val delay = taskTimeMillis - currentTimeMillis
         val inputData = workDataOf("taskId" to taskId)
 
-        // Buat WorkRequest baru
+        // Create the WorkRequest
         val workRequest = OneTimeWorkRequestBuilder<TaskNotificationWorker>()
             .setInitialDelay(delay, TimeUnit.MILLISECONDS)
             .setInputData(inputData)
             .build()
 
-        // Gunakan enqueueUniqueWork untuk mengganti pekerjaan lama dengan tag taskId
+        // Enqueue the work
         WorkManager.getInstance(requireContext())
             .beginUniqueWork(
-                taskId, // Nama unik untuk pekerjaan ini
-                ExistingWorkPolicy.REPLACE, // Gantikan pekerjaan lama
+                taskId, // Unique tag for the work
+                ExistingWorkPolicy.REPLACE, // Replace any existing work with the same tag
                 workRequest
             )
             .enqueue()
 
         Log.d("TaskNotification", "Notification scheduled for $date $timeRange (delay: $delay ms) with tag: $taskId")
     }
-
 
     private fun getSelectedStatus(): String {
         val selectedStatusId = radioGroupStatus.checkedRadioButtonId
@@ -307,5 +329,3 @@ class TaskDetailsFragment : Fragment() {
         }
     }
 }
-
-
