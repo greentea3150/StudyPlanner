@@ -101,7 +101,6 @@ class TasksFragment : Fragment() {
         return view
     }
 
-    // Fetch tasks from Firestore, optionally filtered by category and search query
     private fun fetchTasks() {
         val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
         var query = firestore.collection("tasks")
@@ -118,6 +117,10 @@ class TasksFragment : Fragment() {
                 .whereLessThanOrEqualTo("taskName", searchQuery + "\uf8ff")  // Firebase range query for string search
         }
 
+        // Sort tasks by date first, then by timeRange (start time)
+        query = query.orderBy("date", com.google.firebase.firestore.Query.Direction.ASCENDING)
+            .orderBy("timeRange", com.google.firebase.firestore.Query.Direction.ASCENDING)
+
         // Listen to changes and update tasks
         query.addSnapshotListener { snapshot, e ->
             if (e != null) {
@@ -128,12 +131,17 @@ class TasksFragment : Fragment() {
             // Parse tasks
             val fetchedTasks = snapshot?.toObjects(Task::class.java) ?: listOf()
 
-            // Update the list with the new tasks
+            // Sort tasks in memory: Finished tasks should be at the bottom
+            val sortedTasks = fetchedTasks.sortedWith(compareBy<Task> { it.status == "Finished" }.thenBy { it.date }.thenBy { it.timeRange })
+
+            // Update the list with the sorted tasks
             tasksList.clear()
-            tasksList.addAll(fetchedTasks)
+            tasksList.addAll(sortedTasks)
             taskAdapter.updateTasks(tasksList)
         }
     }
+
+
 
     // Fetch categories from the 'Categories' collection
     private fun fetchCategories() {
