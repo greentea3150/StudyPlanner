@@ -43,7 +43,7 @@
     <string name="materials">Materials</string>
     <string name="update">Update</string>
     <string name="delete">Delete</string>
-    <string name="_8_tasks">8 Tasks</string>
+    <string name="_8_tasks"> </string>
     <string name="never_gonna_give_the_assignments_up">Never gonna give the assignments up 😭</string>
     <string name="today_s_tasks">Today\'s Tasks</string>
     <string name="date_home">Date</string>
@@ -73,7 +73,7 @@
     <string name="_22_00">22:00</string>
     <string name="_23_00">23:00</string>
     <string name="_24_00">24:00</string>
-    <string name="good_morning_user">Good morning, User ☁️</string>
+    <string name="good_morning_user"> </string>
     <string name="add_category">Add Category</string>
     <string name="enter_category_name">Enter Category Name</string>
     <string name="pick_color">Pick Color</string>

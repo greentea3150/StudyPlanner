@@ -1,21 +1,34 @@
 package com.example.studyplanner
 
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import java.io.File
+import android.Manifest
 
 class ProfileFragment : Fragment() {
 
@@ -24,8 +37,16 @@ class ProfileFragment : Fragment() {
     private lateinit var emailTextView: TextView
     private lateinit var editNameIcon: ImageView
     private lateinit var editPasswordIcon: ImageView
+    private lateinit var editProfilePictureIcon: ImageButton
+    private lateinit var profileImageView: ImageView
+    private lateinit var logoutButton: Button
     private lateinit var mAuth: FirebaseAuth
     private val firestore = FirebaseFirestore.getInstance() // Initialize Firestore
+    private val storage = FirebaseStorage.getInstance()
+
+    private val PICK_IMAGE_REQUEST = 1
+    private val CAMERA_REQUEST_CODE = 2
+    private val CAMERA_PERMISSION_CODE = 100
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +60,9 @@ class ProfileFragment : Fragment() {
         emailTextView = view.findViewById(R.id.profile_email)
         editNameIcon = view.findViewById(R.id.edit_name_icon)
         editPasswordIcon = view.findViewById(R.id.edit_password_icon)
-
+        editProfilePictureIcon = view.findViewById(R.id.camera_button)
+        profileImageView = view.findViewById(R.id.imageView8)
+        logoutButton = view.findViewById(R.id.logout_button)
 
         mAuth = FirebaseAuth.getInstance()
 
@@ -58,9 +81,13 @@ class ProfileFragment : Fragment() {
 
         editNameIcon.setOnClickListener { showEditNameDialog() }
         editPasswordIcon.setOnClickListener { showEditPasswordDialog() }
+        editProfilePictureIcon.setOnClickListener { showPictureOptionsDialog() }
 
+        logoutButton.setOnClickListener { logoutUser() }
+        loadProfilePictureFromFirestore()
         return view
     }
+
 
     private fun loadUserProfileFromFirestore() {
         val currentUser = mAuth.currentUser
@@ -79,27 +106,104 @@ class ProfileFragment : Fragment() {
                             profileNameTextView.text = name
                             emailTextView.text = email
                         } else {
-                            if (isAdded) { // Ensure the fragment is attached
-                                Toast.makeText(requireContext(), "Error: User data is incomplete.", Toast.LENGTH_SHORT).show()
-                            }
+                            Toast.makeText(requireContext(), "Error: User data is incomplete.", Toast.LENGTH_SHORT).show()
                         }
                     } else {
-                        if (isAdded) { // Ensure the fragment is attached
-                            Toast.makeText(requireContext(), "Error: User document not found.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Error: User document not found.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Toast.makeText(requireContext(), "Failed to load profile: ${exception.message}", Toast.LENGTH_LONG).show()
+                }
+        } else {
+            Toast.makeText(requireContext(), "User not logged in.", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun loadProfilePictureFromFirestore() {
+        val currentUser = mAuth.currentUser
+        if (currentUser != null) {
+            val userId = currentUser.uid
+            val userDocRef = firestore.collection("users").document(userId)
+
+            userDocRef.get()
+                .addOnSuccessListener { document ->
+                    if (document.exists()) {
+                        val profilePictureUrl = document.getString("profilePicture")
+                        if (!profilePictureUrl.isNullOrEmpty()) {
+                            Glide.with(this).load(profilePictureUrl).into(profileImageView)
                         }
                     }
                 }
                 .addOnFailureListener { exception ->
-                    if (isAdded) { // Ensure the fragment is attached
-                        Toast.makeText(requireContext(), "Failed to load profile: ${exception.message}", Toast.LENGTH_LONG).show()
-                    }
+                    Toast.makeText(requireContext(), "Failed to load profile picture: ${exception.message}", Toast.LENGTH_LONG).show()
                 }
+        }
+    }
+
+    private fun showPictureOptionsDialog() {
+        val options = arrayOf("Take a Photo", "Choose from Gallery")
+
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Update Profile Picture")
+            .setItems(options) { dialog, which ->
+                when (which) {
+                    0 -> checkCameraPermission() // Ubah ini
+                    1 -> selectImageFromGallery()
+                }
+            }
+            .show()
+    }
+
+    private fun checkCameraPermission() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // Permission belum diberikan, minta permission
+            requestPermissions(
+                arrayOf(Manifest.permission.CAMERA),
+                CAMERA_PERMISSION_CODE
+            )
         } else {
-            if (isAdded) { // Ensure the fragment is attached
-                Toast.makeText(requireContext(), "User not logged in.", Toast.LENGTH_LONG).show()
+            // Permission sudah ada, buka kamera
+            openCamera()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            CAMERA_PERMISSION_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission diberikan
+                    openCamera()
+                } else {
+                    // Permission ditolak
+                    Toast.makeText(
+                        requireContext(),
+                        "Camera permission is required to take photos",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
     }
+
+    private fun openCamera() {
+        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE)
+    }
+
+    private fun selectImageFromGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+    }
+
 
     private fun showEditNameDialog() {
         val currentUser = mAuth.currentUser
@@ -254,6 +358,82 @@ class ProfileFragment : Fragment() {
                 }
         } else {
             Toast.makeText(requireContext(), "User not logged in.", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun logoutUser() {
+        mAuth.signOut()
+        val intent = Intent(requireContext(), LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        Toast.makeText(requireContext(), "Logged out successfully.", Toast.LENGTH_SHORT).show()
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && data != null) {
+            when (requestCode) {
+                PICK_IMAGE_REQUEST -> {
+                    val imageUri = data.data
+                    uploadProfilePicture(imageUri)
+                }
+                CAMERA_REQUEST_CODE -> {
+                    val imageBitmap = data.extras?.get("data") as Bitmap
+                    val imageUri = saveBitmapToUri(imageBitmap)
+                    uploadProfilePicture(imageUri)
+                }
+            }
+        }
+    }
+
+    private fun saveBitmapToUri(bitmap: Bitmap): Uri {
+        val file = File(requireContext().cacheDir, "profile_picture.jpg")
+        file.outputStream().use {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
+        }
+        return FileProvider.getUriForFile(requireContext(), "${requireContext().packageName}.fileprovider", file)
+    }
+
+
+
+    private fun uploadProfilePicture(imageUri: Uri?) {
+        if (imageUri != null) {
+            val currentUser = mAuth.currentUser
+            if (currentUser != null) {
+                val userId = currentUser.uid
+                val storageRef = storage.reference.child("profile_pictures/$userId.jpg")
+
+                val uploadTask = storageRef.putFile(imageUri)
+                uploadTask.addOnSuccessListener {
+                    storageRef.downloadUrl.addOnSuccessListener { uri ->
+                        updateUserProfilePictureInFirestore(uri.toString())
+                        Glide.with(this).load(uri).into(profileImageView)
+                        Toast.makeText(requireContext(), "Profile picture updated successfully.", Toast.LENGTH_SHORT).show()
+                    }
+                }.addOnFailureListener { exception ->
+                    Toast.makeText(requireContext(), "Failed to upload picture: ${exception.message}", Toast.LENGTH_LONG).show()
+                }
+            }
+        } else {
+            Toast.makeText(requireContext(), "No image selected.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+    private fun updateUserProfilePictureInFirestore(downloadUrl: String) {
+        val currentUser = mAuth.currentUser
+        if (currentUser != null) {
+            val userId = currentUser.uid
+            val userDocRef = firestore.collection("users").document(userId)
+
+            userDocRef.update("profilePicture", downloadUrl)
+                .addOnSuccessListener {
+                    Toast.makeText(requireContext(), "Profile picture URL updated in Firestore.", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener { exception ->
+                    Toast.makeText(requireContext(), "Failed to update Firestore: ${exception.message}", Toast.LENGTH_LONG).show()
+                }
         }
     }
 }
