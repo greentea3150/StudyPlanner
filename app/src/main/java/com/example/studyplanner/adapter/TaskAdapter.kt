@@ -59,7 +59,7 @@ class TaskAdapter(
             when (task.status) {
                 "In Progress" -> statusTextView.setTextColor(Color.YELLOW) // Yellow for "In Progress"
                 "Finished" -> {
-                    statusTextView.setTextColor(Color.GREEN) // Green for "Finished"
+                    statusTextView.setTextColor(Color.parseColor("#006400")) // Green for "Finished"
                     // Apply strikethrough and change task name color to gray
                     taskNameTextView.setPaintFlags(taskNameTextView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG)
                     taskNameTextView.setTextColor(Color.GRAY) // Gray for finished tasks
