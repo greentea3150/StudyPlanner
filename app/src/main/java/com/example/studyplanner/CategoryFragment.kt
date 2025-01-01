@@ -135,7 +135,7 @@ class CategoryFragment : Fragment() {
         val colorPreview = dialogView.findViewById<View>(R.id.selectedColorPreview)
 
         // Reset selected color to default
-        selectedColor = Color.WHITE
+        selectedColor = Color.GRAY
         colorPreview.setBackgroundColor(selectedColor)
 
         val dialog = AlertDialog.Builder(requireContext())

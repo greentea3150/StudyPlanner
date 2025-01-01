@@ -184,29 +184,27 @@ class TasksFragment : Fragment() {
 
     // Show filter dialog with category options
     private fun showFilterDialog() {
-        // Only show the dialog if categories have been fetched
-        if (allCategories.isEmpty()) {
-            fetchCategories()
-        }
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.fragment_tasks_dialog_filter, null)
 
-        val spinner = Spinner(requireContext())
+        val spinner = dialogView.findViewById<Spinner>(R.id.spinner_categories)
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, allCategories)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
 
+        // Create the dialog
         val dialog = AlertDialog.Builder(requireContext())
-            .setTitle("Select Category")
-            .setView(spinner)
-            .setPositiveButton("Apply") { _, _ ->
+            .setView(dialogView)
+            .setPositiveButton("APPLY") { _, _ ->
                 currentCategory = spinner.selectedItem as String
-                fetchTasks()  // Fetch tasks with the selected category
+                fetchTasks() // Fetch tasks with the selected category
             }
-            .setNegativeButton("Clear") { _, _ ->
+            .setNegativeButton("CLEAR") { _, _ ->
                 currentCategory = null
-                fetchTasks()  // Fetch all tasks (clear filter)
+                fetchTasks() // Fetch all tasks (clear filter)
             }
             .create()
 
         dialog.show()
     }
+
 }

@@ -18,51 +18,23 @@
         android:textSize="24sp"
         android:textStyle="bold" />
 
-    <!-- Search View outside the Toolbar -->
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:queryHint="Search Tasks"
-        android:iconifiedByDefault="false"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"/>
-
-    <!-- LinearLayout to hold Search Button and Clear Search Button -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp">
 
-        <!-- Search Button -->
-        <Button
-            android:id="@+id/searchButton"
-            android:layout_width="wrap_content"
+        <!-- Search View outside the Toolbar -->
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Search"
-            android:layout_marginEnd="8dp" />
-
-        <!-- Clear Search Button -->
-        <Button
-            android:id="@+id/clearSearchButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Clear"
-            android:layout_marginStart="8dp" />
-    </LinearLayout>
-
-    <!-- Toolbar with Filter Icon -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:elevation="4dp"
-        android:orientation="horizontal">
+            android:queryHint="Search Tasks"
+            android:iconifiedByDefault="false"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/ic_bordered_frame"/>
 
         <!-- Filter Icon on the right -->
         <androidx.appcompat.widget.AppCompatImageButton
@@ -72,8 +44,34 @@
             android:src="@android:drawable/ic_menu_sort_by_size"
             android:contentDescription="Filter"
             android:layout_gravity="end"
+            android:paddingTop="5dp"
             android:background="?attr/selectableItemBackground" />
-    </androidx.appcompat.widget.Toolbar>
+    </LinearLayout>
+
+    <!-- LinearLayout to hold Search Button and Clear Search Button -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="16dp">
+
+        <!-- Clear Search Button -->
+        <Button
+            android:id="@+id/clearSearchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clear"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Search Button -->
+        <Button
+            android:id="@+id/searchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
 
     <!-- RecyclerView for Tasks -->
     <androidx.recyclerview.widget.RecyclerView
