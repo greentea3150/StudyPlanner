@@ -174,7 +174,7 @@ class HomeFragment : Fragment() {
     private fun generateTimeSlots(): List<TimeSlot> {
         return (0..23).map { hour ->
             val formattedHour = String.format("%02d:00", hour)
-            TimeSlot(hour = formattedHour, tasks = emptyList()) // Replace emptyList() with real data
+            TimeSlot(hour = formattedHour, tasks = emptyList())
         }
     }
 

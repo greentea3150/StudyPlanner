@@ -155,7 +155,7 @@ class TasksFragment : Fragment() {
                 .addOnSuccessListener { snapshot ->
                     allCategories.clear()
                     snapshot.documents.forEach { doc ->
-                        val category = doc.getString("name")  // Assuming the category field is 'name'
+                        val category = doc.getString("name")
                         if (category != null && !allCategories.contains(category)) {
                             allCategories.add(category)
                         }
@@ -167,7 +167,6 @@ class TasksFragment : Fragment() {
                 }
         } else {
             // Handle case where user is not logged in
-            // You could show a message or handle the error accordingly
         }
     }
 

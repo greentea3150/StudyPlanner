@@ -41,7 +41,7 @@ class ProfileFragment : Fragment() {
     private lateinit var profileImageView: ImageView
     private lateinit var logoutButton: Button
     private lateinit var mAuth: FirebaseAuth
-    private val firestore = FirebaseFirestore.getInstance() // Initialize Firestore
+    private val firestore = FirebaseFirestore.getInstance()
     private val storage = FirebaseStorage.getInstance()
 
     private val PICK_IMAGE_REQUEST = 1
@@ -148,7 +148,7 @@ class ProfileFragment : Fragment() {
         builder.setTitle("Update Profile Picture")
             .setItems(options) { dialog, which ->
                 when (which) {
-                    0 -> checkCameraPermission() // Ubah ini
+                    0 -> checkCameraPermission()
                     1 -> selectImageFromGallery()
                 }
             }
@@ -161,13 +161,13 @@ class ProfileFragment : Fragment() {
                 Manifest.permission.CAMERA
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // Permission belum diberikan, minta permission
+            // Permission not yet given, give permission
             requestPermissions(
                 arrayOf(Manifest.permission.CAMERA),
                 CAMERA_PERMISSION_CODE
             )
         } else {
-            // Permission sudah ada, buka kamera
+            // Permission given, open camera
             openCamera()
         }
     }
@@ -180,10 +180,10 @@ class ProfileFragment : Fragment() {
         when (requestCode) {
             CAMERA_PERMISSION_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Permission diberikan
+                    // Permission given
                     openCamera()
                 } else {
-                    // Permission ditolak
+                    // Permission denied
                     Toast.makeText(
                         requireContext(),
                         "Camera permission is required to take photos",

@@ -191,17 +191,17 @@ class AddTaskFragment : Fragment() {
         val delay = taskTimeMillis - currentTimeMillis
         val inputData = workDataOf("taskId" to taskId)
 
-        // Buat WorkRequest baru
+        // For WorkRequest
         val workRequest = OneTimeWorkRequestBuilder<TaskNotificationWorker>()
             .setInitialDelay(delay, TimeUnit.MILLISECONDS)
             .setInputData(inputData)
             .build()
 
-        // Gunakan enqueueUniqueWork untuk mengganti pekerjaan lama dengan tag taskId
+        // Use enqueueUniqueWork to replace the old task with the tag taskId
         WorkManager.getInstance(requireContext())
             .beginUniqueWork(
-                taskId, // Nama unik untuk pekerjaan ini
-                ExistingWorkPolicy.REPLACE, // Gantikan pekerjaan lama
+                taskId,
+                ExistingWorkPolicy.REPLACE,
                 workRequest
             )
             .enqueue()
